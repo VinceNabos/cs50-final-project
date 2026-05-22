@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <!-- Style -->
+        <link rel='stylesheet' href='static/style.css'>
+
+        <!-- From google api (Jetbrains Font)-->
+        <link rel="preconnect" href="https://googleapis.com">
+        <link rel="preconnect" href="https://gstatic.com" crossorigin>
+        <link href="https://googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+        <!-- from https://getbootstrap.com/docs/4.1/getting-started/introduction/ -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+        <title>Title: {% block title %}{% endblock %}</title>
+
+        <style>
+        body {
+            background-color: #0d1117;
+        }
+        </style>
+    </head>
+
+    <body>
+        
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col col-md-7 left-col-login border-end border-dark">
+
+            <p style='color: white'> 10/10 image here </p>
+
+        </div>
+        <div class="col col-md-5 right-col-login">
+            
+            <h1 class='title'>Title</h1>
+            <h4 class='tagline'>Tagline</h3>
+
+            {% block loginLabel %}{% endblock %}
+
+            <!-- Login and register forms -->
+             {% block loginForm %}{% endblock %}
+
+        </div>
+    </div>
+    </div>
+
+    </body>
+</html>

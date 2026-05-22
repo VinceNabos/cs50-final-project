@@ -1,0 +1,176 @@
+/* Font style */
+* {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Navbar style */
+.navbar-brand,
+.nav-link,
+.dropdown-item {
+    color: white !important;
+}
+
+.dropdown-menu {
+    background-color: #010203 !important;
+    border: 1px solid rgb(39, 39, 39) !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: #333 !important;
+    color:white !important;
+}
+
+/* Login and register styles */
+.left-col-login,
+.right-col-login {
+    height: 100vh;
+    width: 100%;
+}
+
+.left-col-login {
+    background-color: black !important;
+}
+
+.title {
+    text-align: center;
+    color: white;
+    padding-top: 15vh;
+}
+
+.tagline {
+    text-align: center;
+    color: rgb(171, 169, 169);
+}
+
+.login-label {
+    color: white;
+}
+
+.login-label, 
+.register-label {
+    color: white;
+    padding-top: 5vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.error {
+    color: red !important;
+}
+
+.form-control {
+    background-color: #0d1117 !important;
+    color: white !important;
+}
+
+.form-control:focus {
+    background-color: #0d1117 !important;
+    color: white !important;
+}
+
+.form-control::placeholder {
+    color: gray !important;
+}
+
+.login-button,
+.register-button {
+    color: blue !important;
+}
+
+.login-button:hover,
+.login-button:focus,
+.register-button:hover,
+.register-button:focus {
+    color: white !important;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+
+.register-text,
+.login-text {
+    display: block !important;
+    color: white !important;
+    text-decoration: none !important;
+    text-align: center !important;
+}
+
+.register-text:focus,
+.register-text:hover,
+.login-text:focus,
+.login-text:hover {
+    text-decoration: underline !important;
+}
+
+/* Account page styles */
+.left-col-account,
+.right-col-account {
+    height: 100vh;
+    width: 100%;
+}
+
+.pfp {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.pfp-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 25vh;
+}
+
+.account-username {
+    text-align: center;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 2px;
+}
+
+.change-label-container {
+    text-align: center;
+}
+
+.change-label {
+    font-size: medium;
+    color: rgb(185, 183, 183);
+    text-decoration: none;
+}
+
+.change-label:focus,
+.change-label:hover {
+    text-decoration: underline;
+}
+
+.change-username-label,
+.change-password-label {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    padding-top: 26vh;
+    padding-bottom: 10px;
+}
+
+.change-button {
+    color: blue !important;
+}
+
+.change-button:hover,
+.change-button:focus {
+    color: white !important;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+
+/* Sidebar styles */
+.sidebar {
+    min-height: 100vh;
+    min-width: 15vw;
+}
+
+.sidebar-item:focus,
+.sidebar-item:hover {
+    background-color: #333 !important;
+    color:white !important;
+}

@@ -1,0 +1,244 @@
+# SQL Library
+from flask import Flask, flash, redirect, render_template, request, session
+from flask_session import Session
+from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import LoginManager, login_required
+from sqlite3 import connect, Row
+from helpers import get_db, login_required
+
+# Configure app
+app = Flask(__name__)
+app.secret_key = b'7ed559e13e3e66b64cc32d87488776c91fdc6b65d9f9d8d1ff29aa97621ee91f'
+
+# Dashboard and home
+@app.route('/')
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
+
+
+# Lessons
+@app.route('/lessons')
+@login_required
+def lessons():
+
+    # Execute database
+    sql = get_db()
+    connection = sql[0]
+    db = sql[1]
+
+    # Load user progress
+    db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+    progress = db.fetchone()
+
+    return render_template('lessons.html', 
+                           lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+
+# Exercises
+@app.route('/exercises')
+@login_required
+def exercises():
+
+    # Execute database
+    sql = get_db()
+    connection = sql[0]
+    db = sql[1]
+
+    # Load user progress
+    db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+    progress = db.fetchone()
+
+    return render_template('exercises.html', 
+                           lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+
+# Account settings
+@app.route('/account')
+@login_required
+def account():
+    return render_template('account.html', username=session['username'])
+
+
+# Change username
+@app.route('/account/change-username', methods=['GET', 'POST'])
+@login_required
+def change_username(error=''):
+
+    # Change username if method = 'POST'
+    if request.method == 'POST':
+        
+        # Execute database
+        sql = get_db()
+        connection = sql[0]
+        db = sql[1]
+
+        # Get form responses
+        change_username = request.form.get('username')
+        confirm_username = request.form.get('confirmUsername')
+
+        # Return error if forms are empty
+        if not change_username or not confirm_username:
+            return render_template('changeUsername.html', error='Please answer all fields', username=session['username'])
+        
+        # Return error if forms are not identical
+        if change_username != confirm_username:
+            return render_template('changeUsername.html', error='Usernames must be identical', username=session['username'])
+        
+        # Return error if username is the same
+        if change_username == session['username']:
+            return render_template('changeUsername.html', error='Please choose a new username', username=session['username'])
+
+        # Check existing database for usernames
+        db.execute('SELECT username FROM users WHERE username = ?', (change_username,))
+
+        # Return error if username already exists
+        if db.fetchone() is not None:
+            return render_template('changeUsername.html', error='Usernames already exists')
+        
+        # Change username
+        db.execute('UPDATE users SET username = ? WHERE id = ?', (change_username, session['user_id'],))
+        connection.commit()
+        session['username'] = change_username
+        return redirect('/account')
+
+    # Display change username if method = 'GET'
+    else:
+        return render_template('changeUsername.html', error=error, username=session['username'])
+    
+
+# Change password
+@app.route('/account/change-password', methods=['GET', 'POST'])
+@login_required
+def change_password(error=''):
+
+    # Change password if method = 'POST'
+    if request.method == 'POST':
+        
+        # Execute database
+        sql = get_db()
+        connection = sql[0]
+        db = sql[1]
+
+        # Get form responses
+        password = request.form.get('password')
+        new_password = request.form.get('newPassword')
+        confirm_new_password = request.form.get('confirmNewPassword')
+
+        # Return error if forms are empty
+        if not password or not new_password or not confirm_new_password:
+            return render_template('changePassword.html', error='Please answer all fields', username=session['username'])
+        
+        # Return error if password is incorrect
+        db.execute('SELECT * FROM users WHERE id = ?', (session['user_id'],))
+        user = db.fetchone()
+        if not check_password_hash(user['hash'], password):
+            return render_template('changePassword.html', error='Incorrect password', username=session['username'])
+
+        # Return error if forms are not identical
+        if new_password != confirm_new_password:
+            return render_template('changePassword.html', error='Passwords must be identical', username=session['username'])
+        
+        # Return error if password is the same
+        if check_password_hash(user['hash'], new_password):
+            return render_template('changePassword.html', error='Please choose a new password', username=session['username'])
+        
+        # Change password
+        db.execute('UPDATE users SET hash = ? WHERE id = ?', (generate_password_hash(new_password), session['user_id'],))
+        connection.commit()
+        session.clear()
+        return redirect('/account')
+
+    # Display change password if method = 'GET'
+    else:
+        return render_template('changePassword.html', error=error, username=session['username'])
+
+
+# Login
+@app.route('/login', methods=['GET', 'POST'])
+def login(error=''):
+    
+    # Login user if method = 'POST'
+    if request.method == 'POST':
+        
+        # Execute database
+        sql = get_db()
+        connection = sql[0]
+        db = sql[1]
+
+        # Get form answers
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        # Return to login page in case of empty forms
+        if not username or not password:
+            return render_template('login.html', error='(Please answer all forms)')
+        
+        # Gets user data
+        db.execute('SELECT * FROM users WHERE username = ?', (username,))
+        account = db.fetchone()
+        
+        # Returns to login page if user does not exist
+        if not account:
+            return render_template('login.html', error='(Account does not exist)')
+        
+        # Returns to login page if password is invalid
+        if not check_password_hash(account['hash'], password):
+            return render_template('login.html', error='(Invalid password)')
+        
+        # User class
+        session['user_id'] = account['id']
+        session['username'] = account['username']
+        return redirect('/')
+    
+    # Show login page if method = 'GET'
+    else:
+        return render_template('login.html', error=error)
+
+# Register
+@app.route('/register', methods=['GET', 'POST'])
+def register(error=''):
+
+    # Register user if method = 'POST'
+    if request.method == 'POST':
+
+        # Execute database
+        sql = get_db()
+        connection = sql[0]
+        db = sql[1]
+
+        # Get form answers
+        username = request.form.get('username')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirmPassword')
+        hash = generate_password_hash(password)
+
+        # Return to register page in case of empty forms
+        if not username or not password or not confirm_password:
+            return render_template('register.html', error='(Please answer all forms)')
+        
+        # Return to register page if password is not confirmed
+        if not password == confirm_password:
+            return render_template('register.html', error='(Password and confirmation must be identical)')
+
+        # Return to register page if username already exists
+        db.execute('SELECT * FROM users WHERE username = ?', (username,))
+        if db.fetchone() is not None:
+            return render_template('register.html', error='(Username taken)')
+        
+        # Executes user data into database
+        db.execute('INSERT INTO users (username, hash) VALUES (?, ?)', (username, hash,))
+        connection.commit()
+        return redirect('/login')
+    
+    # Show register page if method = 'GET'
+    else:
+        return render_template('register.html', error=error)
+    
+# Logout
+@app.route('/logout')
+def logout():
+    
+    # Log user out
+    session.clear()
+    return redirect('/login')

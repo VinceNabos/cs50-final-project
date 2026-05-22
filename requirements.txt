@@ -1,0 +1,5 @@
+Flask
+flask_session
+werkzeug
+flask_login
+sqlite3

@@ -1,0 +1,45 @@
+{% extends 'layoutLoginRequired.html' %}
+
+{% block title %}
+    Account
+{% endblock %}
+
+{% block body %}
+
+    <!-- Account page coluns-->
+    <div class="container-fluid">
+    <div class="row">
+    
+        <!-- Profile -->
+        <div class="col col-md-4 left-col-account border-end">
+
+            <!-- Profile picture -->
+            <div class='pfp-container'>
+                <img class='pfp' src='static/assets/profile-picture.webp' alt='Profile Picture'>
+            </div>
+
+            <!-- Username -->
+            <h4 class='account-username'>
+                {{ username }}
+            </h4>
+
+             <!-- Change username/password -->
+            <h5 class='change-label-container' style='color: rgb(185, 183, 183);'>
+                <a class='change-label' href='/account/change-username'>
+                    Change Username
+                </a>
+                |
+                <a class='change-label' href='/account/change-password'>
+                    Change Password
+                </a>
+            </h5>
+
+        </div>
+
+        <div class="col col-md-8 right-col-account">
+            
+        </div>
+    </div>
+    </div>
+
+{% endblock %}

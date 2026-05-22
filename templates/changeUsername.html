@@ -1,0 +1,65 @@
+{% extends 'layoutLoginRequired.html' %}
+
+{% block title %}
+    Change Username
+{% endblock %}
+
+{% block body %}
+
+    <!-- Account page coluns-->
+    <div class="container-fluid">
+    <div class="row">
+    
+        <!-- Profile -->
+        <div class="col col-md-4 left-col-account border-end">
+
+            <!-- Profile picture -->
+            <div class='pfp-container'>
+                <img class='pfp' src="{{ url_for('static', filename='assets/profile-picture.webp') }}" alt='Profile Picture'>
+            </div>
+
+            <!-- Username -->
+            <h4 class='account-username'>
+                {{ username }}
+            </h4>
+
+             <!-- Change username/password -->
+            <h5 class='change-label-container' style='color: rgb(185, 183, 183);'>
+                <a class='change-label' href='/account/change-username'>
+                    Change Username
+                </a>
+                |
+                <a class='change-label' href='/account/change-password'>
+                    Change Password
+                </a>
+            </h5>
+
+        </div>
+
+
+        <!-- Change username -->
+        <div class="col col-md-8 right-col-account">
+
+            <h2 class='change-username-label'>Change Username <span class='error'>{{ error }}</span> </h2>
+
+            <form action='/account/change-username' method='POST'>
+                
+                <div class="mb-3">
+                    <input autocomplete='off' type='text' class="form-control" placeholder="New Username" name='username' required>
+                </div>
+
+                <div class="mb-3">
+                    <input autocomplete='off' type='text' class="form-control" placeholder='Confirm Username' name='confirmUsername' required>
+                </div>
+                
+                <div class='mb-3'>
+                    <button type="submit" class="change-button btn btn-outline-primary form-control">
+                        Change Username
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+{% endblock %}

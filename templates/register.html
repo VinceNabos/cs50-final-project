@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block loginLabel %}
+    <p class='register-label'>Register <span class='error'>{{ error }}</span> </p>
+{% endblock %}
+
+{% block loginForm %}
+
+    <!-- Form from https://getbootstrap.com/docs/5.3/forms/overview/ -->
+    <form action='/register' method='POST'>
+        
+        <div class="mb-3">
+            <input autocomplete='off' type='text' class="form-control" placeholder="Username" name='username' required>
+        </div>
+
+        <div class="mb-3">
+            <input autocomplete='off' type='password' class="form-control" placeholder='Password' name='password' required>
+        </div>
+
+        <div class="mb-3">
+            <input autocomplete='off' type='password' class="form-control" placeholder='Confirm Password' name='confirmPassword' required>
+        </div>
+        
+        <div class='mb-3'>
+            <button type="submit" class="register-button btn btn-outline-primary form-control">
+                Register
+            </button>
+        </div>
+
+    <p>
+        <a class='login-text' href='/login'>Already have an account?</a>
+    </p>
+
+    </form>
+{% endblock %}
