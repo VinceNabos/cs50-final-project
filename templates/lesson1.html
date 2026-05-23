@@ -1,0 +1,422 @@
+{% extends 'layoutLoginRequired.html' %}
+
+{% block title %}
+    Lesson 1
+{% endblock %}
+
+{% block body %}
+
+    <h1 class='lesson-text lesson-title'>
+        Lesson 1: Variables, Data Types, Operators
+    </h1>
+
+    <h2 class='lesson-text lesson-header'>
+        Getting Started with Python
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+            
+        <li class='lesson-bullet'>
+            At Syntax, exercises can be done without installing anything.
+        </li>
+
+        <li class='lesson-bullet'>
+            However, it may be in your best interest to try out code as we go through different concepts!
+        </li>
+        
+        <li class='lesson-bullet code'>
+            To run Python, you first have to check if Python is installed. Type the following commands to check for Python:
+
+            <pre>
+                <code>
+    (For Windows, use command prompt)
+    C:\Users\[Your Name]>python --version
+
+    (For Linux or Mac, use the command line or terminal respectively)
+    python --version
+            </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            If python is not installed, you can download it from: 
+            <a href='https://www.python.org/'>https://www.python.org/</a>
+        </li>
+
+        <li class='lesson-bullet'>
+            In any text editor (eg. Notepad), you can start writing your own Python code! 
+            Let us write our first Python file, 'hello.py':
+            
+            <pre>
+                <code>
+    print('hello, world')
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            Save your file, go back to the command line, navigate to the location of your file, and run the following:
+
+            <pre>
+                <code>
+    python hello.py
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            The output should be:
+
+            <pre>
+                <code>
+    hello, world
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            Congrats! You have written your first Python program!
+        </li>
+
+        <li class='lesson-bullet'>
+            You can also use 
+            <a href='https://code.visualstudio.com/'>Visual Studio Code</a>,
+            a very popular IDE, to create Python programs.
+        </li>
+
+        <li class='lesson-bullet'>
+            Check out their Python tutorial
+            <a href='https://www.youtube.com/watch?v=D2cwvpJSBX4'>here!</a>
+        </li>
+            
+        
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Functions (Overview)
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+            
+        <li class='lesson-bullet'>
+            What you just wrote was a print program. print() is a function that simply
+            displays output to the screen.
+        </li>
+
+        <li class='lesson-bullet'>
+            Python comes built-in with these functions; tools to perform certain tasks that we
+            can call whenever we need them.
+        </li>
+
+        <li class='lesson-bullet'>
+            To call a function, simply type its name and the inputs inside parentheses! Recall that
+            our print function took 'hello world' as an input and "printed" it to the screen!
+        </li>
+
+        <li class='lesson-bullet'>
+            We will encounter different types of functions later on (and hey, you'll even create your own!)
+            once we learn the basic fundamentals of Python.
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Variables
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+            
+        <li class='lesson-bullet'>
+            Variables are simply containers for storing data values. Say you want to represent
+            the number five (5) in a variable:
+
+            <pre>
+                <code>
+    # Tip: You can write comments in your code using hashes!
+    x = 5
+    print(x)
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            Your first instinct might be that the print() function prints out 'x'. However,
+            in your code, x is now a variable containing the number five (5)! Thus, the output
+            of your program is:
+
+            <pre>
+                <code>
+    # Output
+    5
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            Variables are case sensitive. In the ccode below, the variables do not have the same
+            values even though they are essentially the same letter.
+
+            <pre>
+                <code>
+    x = 5
+    X = 404
+
+    print(x)
+    print(X)
+
+    # Output
+    5
+    404
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            A variable can be changed in the middle of your program. Python reads code from top to bottom,
+            so be careful when changing the values of your variables!
+
+            <pre>
+                <code>
+    x = 5
+
+    # Random code goes here
+
+    x = 'John'
+    print(x)
+
+    # Output
+    John
+            </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            Wait, notice that? The variable x was assigned a text value instead of a number!
+            Variables can be assigned different data types. But what exactly are those?
+        </li>
+        
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Data Types
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+            
+        <li class='lesson-bullet'>
+            Variables can store different data types, and each type can do different things.
+            The following are some of Python's built-in data types that you will see in this course:
+
+            <pre>
+                <code>
+    # Texts         # Numerics          # Boolean
+    str             int, float          bool
+
+    # Sequences     # Maps              # None 
+    list, range     dict                None
+
+                </code></pre>
+        </li>
+
+        <li>
+            You can get the data type of a variable by using the type() function.
+
+            <pre>
+                <code>
+    x = 0
+    print(type(x))
+
+    # Output
+    &lt;class 'int'>
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            The most fundamental of these data types are strings, ints, floats, booleans, and the 'None' value.
+            All programming languages have these data types by default, though some may have some weird implementations.
+        </li>
+
+        <li class='lesson-bullet'>
+            We can do all sorts of stuff with these data types! But first, let us understand what each one stores.
+        </li>
+
+        <li class='lesson-bullet'>
+            Strings (str) are esentially a sequence of characters used to represent text. Think of any word. When that word is
+            assigned to a variable, the variable is now a string.
+
+            <pre>
+                <code>
+    # Use single or double quotes to denote a string! Either work, just be consistent!
+    # This is important as Python, like most languages, recognize strings by the quotes.
+    x = 'David'
+    y = "cat"
+
+    print(type(x))
+    print(type(y))
+
+    # Output
+    &lt;class 'str'>
+    &lt;class 'str'>
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            Numbers can be represented by integers (int) or floats (float). Integers are the whole numbers you
+            know and love while floats have decimal places, even if they are trailing zeros.
+
+            <pre>
+                <code>
+    x = 1
+    y = 1.0
+
+    print(type(x))
+    print(type(y))
+
+    # Output
+    &lt;class 'int'>
+    &lt;class 'float'>
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            The None data type represents, well, nothing! To be clear, it represents the abscence
+            of a value or a null state. It could also represent the emptiness of a list (more on that soon!).
+
+            <pre>
+                <code>
+    x = None
+    print(type(x))
+
+    # Output
+    &lt;class 'NoneType'>
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            A boolean can hold only one of two possible values: True or False. It's as simple as it sounds!
+            When something is true, a boolean says it's true. If it isn't, then a boolean says it's false.
+
+            <pre>
+                <code>
+    # In Python, booleans are capitalized!
+    x = True
+
+    print(type(x))
+    print(5 < 3) # More on operators soon!
+
+    # Output
+    &lt;class 'bool'>
+    False
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            If you've looked at your sidebar, you'll see lists and dictionaries, two more Python data types.
+            We'll get to those soon! Python has a bunch more, but it'll be up to you to explore those!
+        </li>
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Operators
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+            
+        <li class='lesson-bullet'>
+            Operators are used to perform operations on variables and values.
+        </li>
+
+        <li class='lesson-bullet'>
+            Arithmetic operators are used to perform common mathematical operations:
+            
+            <pre>
+                <code>
+    x = 15
+    y = 5
+
+    print(x + y)    # +, addition
+    print(x - y)    # -, subtraction
+    print(x * y)    # *, multiplication
+    print(x / y)    # /, division (returns a float)
+    print(x // y)   # //, floor division (returns an integer, rounded down)
+    print(x % y)    # %, module (returns a remainder)
+
+    # Output
+    20
+    10
+    75
+    3.0
+    3
+    0
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            The equal sign is Python's assignment operator. Whatever is on the left gets assigned the value
+            on the right! Python also comes with some handy syntax when using the assignment operator.
+
+            <pre>
+                <code>
+    x = 5   # x gets assigned the value 5
+    y = x   # y gets assigned the value of x, which is 5
+
+    x += 5  # x gets assigned the value of x + 5 (x = x + 5)
+
+    print(x)
+    print(y)
+
+    # Output
+    10
+    5
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            Comparison operators are used to compare two variables or values. Comparison statements return
+            booleans!
+
+            <pre>
+                <code>
+    print(5 == 5)   # Single equal signs are for assigning values, while double equal signs are for comparison!
+    print(10 > 3)   # Greater than
+    print(10 < 3)   # Less than
+    print(10 >= 10) # Greater than or equal to
+    print(10 <= 20) # Less than or equal to
+    
+    # Output
+    True
+    True
+    False
+    True
+    False
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            Logical operators combine conditional statements. Their use cases are identical to
+            their english counterparts!
+
+            <pre>
+                <code>
+    print(2 < 5 and 5 < 2)  # Returns True if both conditions are true
+    print(2 < 5 or 5 < 2)   # Returns True if one condition is true
+    print(5 < 2)            # Returns True if the condition is false
+
+    # Output
+    False
+    True
+    True
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            Just like with data types, Python has a bunch of other operators. Some, we'll
+            encounter later on in the course. Others, well, you're going to find and learn them yourself!
+        </li>
+
+        <hr>
+    </ul>
+    
+    <div class='nav-buttons'>
+        <a href='/lessons'>
+            <button type="button" class="btn btn-outline-primary nav-butt">< Back</button>
+        </a>
+
+        <a href='/lessons/2'>
+            <button type="button" class="btn btn-outline-primary nav-butt">Next > </button>
+        </a>
+    </div>
+
+{% endblock %}

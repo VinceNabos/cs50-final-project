@@ -1,6 +1,12 @@
-/* Font style */
+/* Global style */
 * {
     font-family: 'JetBrains Mono', monospace;
+    box-sizing: border-box;
+}
+
+/* Body style */
+.main-content {
+    min-height: 100vh;
 }
 
 /* Navbar style */
@@ -35,12 +41,20 @@
 .title {
     text-align: center;
     color: white;
-    padding-top: 15vh;
+    padding-top: 13vh;
 }
 
 .tagline {
     text-align: center;
     color: rgb(171, 169, 169);
+    padding-top: 1vh;
+}
+
+.inspired {
+    text-align: center;
+    color: rgb(80, 80, 80);
+    font-size: medium;
+    padding-top: 1vh;
 }
 
 .login-label {
@@ -104,8 +118,11 @@
 /* Account page styles */
 .left-col-account,
 .right-col-account {
-    height: 100vh;
     width: 100%;
+}
+
+.row {
+    min-height: 100vh;
 }
 
 .pfp {
@@ -165,12 +182,55 @@
 
 /* Sidebar styles */
 .sidebar {
-    min-height: 100vh;
+    width: 250px;
+    height: 100vh;
+    padding-top: 10vh;
     min-width: 15vw;
+    max-width: 15vw;
+    position: sticky !important;
+    top: 0 !important;
+    overflow-y: auto !important;
 }
 
 .sidebar-item:focus,
 .sidebar-item:hover {
     background-color: #333 !important;
     color:white !important;
+}
+
+/* Lessons styles */
+.lesson-text {
+    padding-left: 2vw;
+    color: white;
+}
+
+.lesson-title {
+    padding-top: 10vh;
+    padding-bottom: 5vh;
+    color: white;
+}
+
+.lesson-header {
+    padding-bottom: 0.5vh;
+}
+
+.lesson-info {
+    padding-left: 4vw;
+    padding-right: 8vw;
+    padding-bottom: 4vh;
+    text-align: justify;
+}
+
+.lesson-bullet {
+    padding-top: 1.5vh;
+    padding-bottom: 1.5vh;
+    font-size: 0.9rem;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 4vw;
+    padding-right: 8vw;
+    padding-bottom: 5vh !important;
 }
