@@ -1,0 +1,165 @@
+{% extends 'layoutLoginRequired.html' %}
+
+{% block title %}
+    Exercises
+{% endblock %}
+
+{% block body %}
+
+    <div class='exercise-top'>
+        <h1 class='exercise-text exercise-title'>
+            Exercise 1.1: Change
+        </h1>
+
+        <h4 class='exercise-text exercise-title exercise-completion'
+        {% if lessons_completed >= 1 %}
+            style='color: green'
+        {% else %}
+            style='color: gray'
+        {% endif %}
+        >
+            {% if lessons_completed >= 1 %}
+                Complete!
+            {% else %}
+               In progress!
+            {% endif %}
+        </h4>
+    </div>
+
+
+    <div class="container-fluid col-exercise">
+    <div class="row">
+    
+        <div class="col col-md-4 left-col-exercise border-top border-end border-bottom border-start">
+
+        <h2 class='exercise-text exercise-header'>
+            Overview
+        </h2>
+
+        <ul class='exercise-text exercise-info'>
+            
+            <li class='exercise-bullet'>
+                We all know the process of buying something. You pick an item, it has a price,
+                you pay that price, and any extra amount will come back to you as change.
+            </li>
+
+            <li class='exercise-bullet'>
+                Now, we live in a world where calculating change is as easy as one, two, three!
+                But even better, we can automate it.
+            </li>
+
+            <li class='exercise-bullet'>
+                In this exercise, you will implement a program that calculates the change of a customer.
+            </li>
+
+        </ul>
+
+        <h2 class='exercise-text exercise-header'>
+            Instructions
+        </h2>
+
+        <ul class='exercise-text exercise-info'>
+
+            <li class='exercise-bullet'>
+                In Python, create a program that calculates the change of a customer.
+            </li>
+
+            <li class='exercise-bullet'>
+                The program will take two inputs, the price and the cash.
+            </li>
+
+            <li class='exercise-bullet'>
+                Your program must print() the change of the customer!
+            </li>
+        </ul>
+
+        <h2 class='exercise-text exercise-header'>
+            Test Cases
+        </h2>
+
+        <ul class='exercise-text exercise-info'>
+
+            <li class='exercise-bullet'>
+                You can assume that all inputs will either be integers or floats.
+            </li>
+
+            <li class='exercise-bullet'>
+                You can assume that the cash variable will always be equal to or larger
+                than the price.
+            </li>
+
+            <li class='exercise-bullet'>
+                Your printed output can be either integers or floats.
+            </li>
+        </ul>
+
+        </div>
+
+        <div class="col col-md-8 right-col-exercise border-top border-bottom border-end">
+            <form action='/exercises/1' method='POST'>
+            <div>
+                <textarea class='code-editor'>
+{% if request.method == 'POST' %}
+{{ code }}
+{% else %}
+# To help you understand exercises better, comments at the top of your
+# code editor will give you information that might be of use!
+
+# The program checks your code by running it through a function!
+# Remember, functions are tools that can take inputs to produce an output.
+# The change function accepts the two variables that you need to use in your code!
+
+# Do not edit the next line:
+def change(price, cash):
+    
+  # Write your code here! (Indentation is important!)
+{% endif %}
+</textarea>
+            </div>
+
+            <div class='output-container'>
+                <p class='exercise-text output-text'
+                {% if request.method == 'POST' %}
+                    {% if correct == True %}
+                    style='color: green'
+                    {% else %}
+                    style='color: red'
+                    {% endif %}
+                {% endif %}
+                >
+                    Output:
+                </p>
+
+                <div class='output-button-group'>
+                    <button type="submit" class="btn btn-outline-secondary">Run</button>
+                </div>
+            </div>
+
+                <pre class='output'><code>
+
+
+            </code></pre>
+
+
+            </form>
+        </div>
+    </div>
+    </div>
+
+    <ul>
+
+        <hr style='color: white; padding-bottom: 2vh'>
+
+    </ul>
+
+    <div class='nav-buttons'>
+        <a href='/'>
+            <button type="button" class="btn btn-outline-primary nav-butt">< Home</button>
+        </a>
+
+        <a href='/exercises/1'>
+            <button type="button" class="btn btn-outline-primary nav-butt">Next > </button>
+        </a>
+    </div>
+
+{% endblock %}

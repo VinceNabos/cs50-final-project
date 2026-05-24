@@ -198,13 +198,18 @@
 
         </div>
 
-        <!-- Syntax highlighting from https://highlightjs.org/ -->
         {% if request.path.startswith('/lessons') or request.path.startswith('/exercises') %}
+            
+            <!-- Syntax highlighting from https://highlightjs.org/ -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/python.min.js"></script>
             <script>
                 hljs.highlightAll();
             </script>
+
+            <!-- Code editor from https://codemirror.net/ -->
+            <script type="module" src='http://localhost:5173/static/js/editor.js'></script>
+            
         {% endif %}
 
     </body>

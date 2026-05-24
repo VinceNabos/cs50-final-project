@@ -198,8 +198,9 @@
     color:white !important;
 }
 
-/* Lessons styles */
-.lesson-text {
+/* Lessons and exercise styles */
+.lesson-text,
+.exercise-text {
     padding-left: 2vw;
     color: white;
 }
@@ -210,7 +211,15 @@
     color: white;
 }
 
-.lesson-header {
+.exercise-title {
+    padding-top: 10vh;
+    padding-bottom: 2vh;
+    color: white;
+}
+
+
+.lesson-header,
+.exercise-header {
     padding-bottom: 0.5vh;
 }
 
@@ -233,4 +242,87 @@
     padding-left: 4vw;
     padding-right: 8vw;
     padding-bottom: 5vh !important;
+}
+
+.col-exercise {
+    padding-left: 2vw !important;
+    padding-right: 2vw !important;
+}
+
+.left-col-exercise {
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto !important;
+}
+
+.right-col-exercise {
+    min-height: 100vh;
+    max-height: 100vh;
+}
+
+.exercise-code {
+    margin-bottom: 0 !important;
+}
+
+.exercise-header {
+    padding-left: 0.5vw !important;
+    padding-top: 2.5vh !important
+}
+
+.exercise-info {
+    padding-left: 2vw;
+    padding-right: 3vw;
+    padding-bottom: 4vh;
+    text-align: justify;
+}
+
+.exercise-bullet {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    font-size: 0.9rem;
+}
+
+.exercise-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.exercise-completion {
+    margin-top: 2vh;
+    margin-right: 2vw;
+}
+
+.output-text {
+    padding-left: 0 !important;
+    padding-bottom: 0 !important;
+    padding-top: 2vh !important;
+    margin-bottom: 0.5vh !important;
+}
+
+.output-container {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 0 !important;
+    padding-bottom: 0 !important;
+    padding-top: 2vh !important;
+    margin-bottom: 0.5vh !important;
+}
+
+.output {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Code editor styles */
+.cm-editor {
+    height: 70vh;
+    margin-top: 2.5vh;
+}
+
+.cm-scroller {
+    overflow: auto;
+}
+
+.cm-content {
+    padding: 10px;
 }
