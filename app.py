@@ -51,7 +51,14 @@ def lesson1():
     # Load user progress
     db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
     progress = db.fetchone()
-    
+
+    if progress['lessons_completed'] == 0:
+        db.execute('UPDATE users SET lessons_completed = lessons_completed + 1 WHERE id = ?', (session['user_id'],))
+        db.execute(
+                'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (0, 1, CURRENT_TIMESTAMP, ?)',
+                (session['user_id'],))
+        connection.commit()
+
     return render_template('lesson1.html', 
                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
 

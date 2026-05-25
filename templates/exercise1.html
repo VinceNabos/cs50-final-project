@@ -162,9 +162,15 @@ def change(price, cash):
             <button type="button" class="btn btn-outline-primary nav-butt">< Home</button>
         </a>
 
-        <a href='/exercises/1'>
-            <button type="button" class="btn btn-outline-primary nav-butt">Next > </button>
+        <a
+            {% if lessons_completed >= 1 and exercises_completed >= 1 %}
+                href="/exercises/1"
+            {% endif %}
+            class="btn btn-outline-primary nav-butt {% if lessons_completed < 1 or exercises_completed < 1 %}disabled{% endif %}"
+        >
+            Next >
         </a>
+
     </div>
 
 {% endblock %}
