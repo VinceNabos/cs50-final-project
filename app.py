@@ -5,6 +5,9 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import LoginManager, login_required
 from sqlite3 import connect, Row
 from helpers import get_db, login_required
+from subprocess import run, TimeoutExpired
+from ast import parse, walk, Import, ImportFrom
+from random import randint, uniform
 
 # Configure app
 app = Flask(__name__)
@@ -70,7 +73,7 @@ def exercises():
                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
 
 # Set 1: Exercise 1
-@app.route('/exercises/1/change')
+@app.route('/exercises/1/change', methods=['GET', 'POST'])
 @login_required
 def exercise1():
 
@@ -83,8 +86,90 @@ def exercise1():
     db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
     progress = db.fetchone()
 
-    return render_template('exercise1.html', 
-                           lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+    # Run code if method is POST
+    if request.method == 'POST':
+
+        # Get code
+        code = request.form.get('code').rstrip()
+
+        # Check code for imports
+        try:
+            tree = parse(code)
+            for node in walk(tree):
+
+                if isinstance(node, (Import, ImportFrom)):
+                    return render_template('exercise1.html', code=code, output='For safety reasons, imports are not allowed!',
+                                        lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Returns error
+        except SyntaxError as output:
+            return render_template('exercise1.html', code=code, output=output, 
+                                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Variables for checking
+        outputs = []
+        answers = []
+
+        # Execute code
+        try:
+
+            # Testing code
+            code_test = code
+
+            # Test cases
+            for i in range(3):    
+                price = round(uniform(1, 20), 2)
+                cash = round(uniform(20, 50), 2)
+                test = '\nchange({x}, {y})'
+                code_test += test.format(x = price, y = cash)
+                answers.append(cash - price)    
+
+            # Put code inside a file
+            with open('temp.py', 'w') as file:
+                file.write(code_test)
+
+            result = run(
+            ['python', 'temp.py'],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            input=''
+            )
+        
+        except TimeoutExpired:
+            return render_template('exercise1.html', code=code, output='Code execution timed out!', 
+                                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+        output = result.stderr
+        if output:
+            return render_template('exercise1.html', code=code, output=output, 
+                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        else:
+            output = result.stdout
+            outputs = result.stdout.splitlines()
+
+
+        # Checks answers
+        for i in range(3):
+            if float(outputs[i]) != answers[i]:
+                return render_template('exercise1.html', code=code, output=output, 
+                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Update database if correct answer
+        if progress['exercises_completed'] == 0:
+            db.execute('UPDATE users SET exercises_completed = exercises_completed + 1 WHERE id = ?', (session['user_id'],))
+            db.execute(
+                    'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (1, 1, CURRENT_TIMESTAMP, ?)',
+                    (session['user_id'],))
+            connection.commit()
+
+        return render_template('exercise1.html', code=code, output=output, correct=True,
+                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+    
+    # Load website if method is GET
+    else:
+        return render_template('exercise1.html', 
+                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
 
 # Account settings
 @app.route('/account')

@@ -12,13 +12,13 @@
         </h1>
 
         <h4 class='exercise-text exercise-title exercise-completion'
-        {% if lessons_completed >= 1 %}
+        {% if exercises_completed >= 1 %}
             style='color: green'
         {% else %}
             style='color: gray'
         {% endif %}
         >
-            {% if lessons_completed >= 1 %}
+            {% if exercises_completed >= 1 %}
                 Complete!
             {% else %}
                In progress!
@@ -80,26 +80,30 @@
         <ul class='exercise-text exercise-info'>
 
             <li class='exercise-bullet'>
-                You can assume that all inputs will either be integers or floats.
+                You may assume that all inputs will either be integers or floats.
             </li>
 
             <li class='exercise-bullet'>
-                You can assume that the cash variable will always be equal to or larger
+                You may assume that the cash variable will always be equal to or larger
                 than the price.
             </li>
 
             <li class='exercise-bullet'>
                 Your printed output can be either integers or floats.
             </li>
+
+            <li class='exercise-bullet'>
+                Your printed output should not be rounded off.
+            </li>
+
         </ul>
 
         </div>
 
         <div class="col col-md-8 right-col-exercise border-top border-bottom border-end">
-            <form action='/exercises/1' method='POST'>
+            <form action='/exercises/1/change' method='POST'>
             <div>
-                <textarea class='code-editor'>
-{% if request.method == 'POST' %}
+                <textarea class='code-editor' name='code'>{% if request.method == 'POST' %}
 {{ code }}
 {% else %}
 # To help you understand exercises better, comments at the top of your
@@ -113,8 +117,7 @@
 def change(price, cash):
     
   # Write your code here! (Indentation is important!)
-{% endif %}
-</textarea>
+{% endif %}  </textarea>
             </div>
 
             <div class='output-container'>
@@ -131,14 +134,16 @@ def change(price, cash):
                 </p>
 
                 <div class='output-button-group'>
+                    <button type="submit" class="btn btn-outline-secondary" formmethod='GET'>Reset</button>
                     <button type="submit" class="btn btn-outline-secondary">Run</button>
                 </div>
             </div>
+        </form>
 
                 <pre class='output'><code>
-
-
-            </code></pre>
+{% if request.method == 'POST' %}{{ output }}
+{% endif %}
+</code></pre>
 
 
             </form>
