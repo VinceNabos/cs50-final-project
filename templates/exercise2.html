@@ -1,24 +1,24 @@
 {% extends 'layoutLoginRequired.html' %}
 
 {% block title %}
-    Change
+    Profiling
 {% endblock %}
 
 {% block body %}
 
     <div class='exercise-top'>
         <h1 class='exercise-text exercise-title'>
-            Exercise 1.1: Change
+            Exercise 1.2: Profiling
         </h1>
 
         <h4 class='exercise-text exercise-title exercise-completion'
-        {% if exercises_completed >= 1 %}
+        {% if exercises_completed >= 2 %}
             style='color: green'
         {% else %}
             style='color: gray'
         {% endif %}
         >
-            {% if exercises_completed >= 1 %}
+            {% if exercises_completed >= 2 %}
                 Complete!
             {% else %}
                In progress!
@@ -39,17 +39,16 @@
         <ul class='exercise-text exercise-info'>
             
             <li class='exercise-bullet'>
-                We all know the process of buying something. You pick an item, it has a price,
-                you pay that price, and any extra amount will come back to you as change.
+                You have an identity. People you know have identities. Everyone has identities.
             </li>
 
             <li class='exercise-bullet'>
-                Now, we live in a world where calculating change is as easy as one, two, three!
-                But even better, we can automate it.
+                In the modern world, governments store citizens' informations in databases run by programs.
+                Be it names, ages, or anything that is used to identify someone.
             </li>
 
             <li class='exercise-bullet'>
-                In this exercise, you will implement a program that calculates the change of a customer.
+                In this exercise, you will implement a program that displays a person's information.
             </li>
 
         </ul>
@@ -61,15 +60,19 @@
         <ul class='exercise-text exercise-info'>
 
             <li class='exercise-bullet'>
-                In Python, create a program that calculates the change of a customer.
+                In Python, create a program that displays a person's information.
             </li>
 
             <li class='exercise-bullet'>
-                The program will take two inputs, the price and the cash.
+                The program will take three inputs: name, age, and sex.
             </li>
 
             <li class='exercise-bullet'>
-                Your program must print() the change of the customer!
+                In this scenario, a person is identified by the following syntax: [NAME] [AGE][SEX]
+            </li>
+
+            <li class='exercise-bullet'>
+                Your program must print() the person's information to the command line!
             </li>
         </ul>
 
@@ -80,20 +83,15 @@
         <ul class='exercise-text exercise-info'>
 
             <li class='exercise-bullet'>
-                You may assume that all inputs will either be integers or floats.
+                You may assume that all names and sexes are strings.
             </li>
 
             <li class='exercise-bullet'>
-                You may assume that the cash variable will always be equal to or larger
-                than the price.
+                You may assume that all ages are integers.
             </li>
 
             <li class='exercise-bullet'>
-                Your printed output can be either integers or floats.
-            </li>
-
-            <li class='exercise-bullet'>
-                Your printed output should not be rounded off.
+                Your printed output must strictly follow the output syntax.
             </li>
 
         </ul>
@@ -101,20 +99,20 @@
         </div>
 
         <div class="col col-md-8 right-col-exercise border-top border-bottom border-end">
-            <form action='/exercises/1/change' method='POST'>
+            <form action='/exercises/1/profiling' method='POST'>
             <div>
                 <textarea class='code-editor' name='code'>{% if request.method == 'POST' %}
 {{ code }}
 {% else %}
-# To help you understand exercises better, comments at the top of your
-# code editor will give you information that might be of use!
+# Remember the output's syntax!
+# [NAME] [AGE][SEX]
+# Dave 18M
 
-# The program checks your code by running it through a function!
-# Remember, functions are tools that can take inputs to produce an output.
-# The change function accepts the two variables that you need to use in your code!
+# You can use the plus operator to 'concatenate' strings!
+# 'Dave ' + '18M' = Dave 18M
 
 # Do not edit the next line:
-def change(price, cash):
+def profiling(name, age, sex):
     
   # Write your code here! (Indentation is important!)
 {% endif %}  </textarea>
@@ -158,15 +156,15 @@ def change(price, cash):
     </ul>
 
     <div class='nav-buttons'>
-        <a href='/'>
-            <button type="button" class="btn btn-outline-primary nav-butt">< Home</button>
+        <a href='/exercises/1/change'>
+            <button type="button" class="btn btn-outline-primary nav-butt">< Back</button>
         </a>
 
         <a
-            {% if lessons_completed >= 1 and exercises_completed >= 1 %}
-                href="/exercises/1/profiling"
+            {% if lessons_completed >= 2 and exercises_completed >= 2 %}
+                href="/exercises/2/greed"
             {% endif %}
-            class="btn btn-outline-primary nav-butt {% if lessons_completed < 1 or exercises_completed < 1 %}disabled{% endif %}"
+            class="btn btn-outline-primary nav-butt {% if lessons_completed < 2 or exercises_completed < 2 %}disabled{% endif %}"
         >
             Next >
         </a>

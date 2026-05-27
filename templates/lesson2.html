@@ -1,412 +1,586 @@
 {% extends 'layoutLoginRequired.html' %}
 
 {% block title %}
-    Lesson 1
+    Lesson 2
 {% endblock %}
 
 {% block body %}
 
     <h1 class='lesson-text lesson-title'>
-        Lesson 1: Variables, Data Types, Operators
+        Lesson 2: Conditionals, Loops
     </h1>
 
     <h2 class='lesson-text lesson-header'>
-        Getting Started with Python
+        Indentation
     </h2>
 
     <ul class='lesson-text lesson-info'>
             
         <li class='lesson-bullet'>
-            At Syntax, exercises can be done without installing anything.
+            If you have done the first set of exercises, you may have noticed that Syntax
+            requires that you indent your code after the function.
         </li>
 
         <li class='lesson-bullet'>
-            However, it may be in your best interest to try out code as we go through different concepts!
+            In Python, indentation is an important concept. Python relies on indentation to identify
+            the scope of your code.
+        </li>
+
+        <li class='lesson-bullet'>
+            Say you have a function. instead of using curly-brackets like many languages,
+            Python identifies the code specific for that function with indents:
+
+            <pre>
+                <code>
+    def function():
+        # These comments are indented the way you indent for functions!
+        # If you do not indent your code, Python will not understand that it is for that specific function only! 
+                </code></pre>
         </li>
         
         <li class='lesson-bullet code'>
-            To run Python, you first have to check if Python is installed. Type the following commands to check for Python:
+            Even outside of Python, programmers indent their code to be able to easily
+            identify which code belongs to which parent function!
+        </li>
+
+        <li class='lesson-bullet'>
+            It is very good practice to indent your code to improve readability.
+        </li>
+    
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Conditions
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+            
+        <li class='lesson-bullet'>
+            Remember booleans? The True or False values?
+            How about operators?
+        </li>
+
+        <li class='lesson-bullet'>
+            Python supports logical conditions from mathematics. Type a statement,
+            and if it is true, you get a True value. If it isn't, you get False.
 
             <pre>
                 <code>
-    (For Windows, use command prompt)
-    C:\Users\[Your Name]>python --version
+    print(5 > 10)   # Mathematics logic. Is 5 greater than 10?
 
-    (For Linux or Mac, use the command line or terminal respectively)
-    python --version
+    # Output
+    False
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            These so-called 'conditions' can be used in several ways.
+            Conditionals and loops are the most common use cases of conditions.
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        If Statements
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+            
+        <li class='lesson-bullet'>
+            A conditional is simply a sentence that expresses conditions,
+            and the results if said conditions are met.
+        </li>
+
+        <li class='lesson-bullet'>
+            In programming, conditionals are fundamental building blocks
+            that tell a computer to do certain tasks only if a condition is met.
+            
+        <li class='lesson-bullet'>
+            One such conditional is an if statement. Basically an essential on every
+            programming language, if statements are conditionals translated into code.
+        </li>
+
+        <li class='lesson-bullet'>
+            In Python, if statements function very much like English conditionals!
+
+            <pre>
+                <code>
+    # if statements use conditionals and require a colon!
+    if [CONDITION IS TRUE]:
+        [DO AN ACTION]
             </code></pre>
         </li>
 
         <li class='lesson-bullet'>
-            If python is not installed, you can download it from: 
-            <a href='https://www.python.org/'>https://www.python.org/</a>
+            The syntax for if statements in Python are simple. Type a statement that
+            can be evaluated as either True or False. If it is True, execute what is
+            inside. If it isn't, the code block is skipped.
         </li>
 
         <li class='lesson-bullet'>
-            In any text editor (eg. Notepad), you can start writing your own Python code! 
-            Let us write our first Python file, 'hello.py':
-            
-            <pre>
-                <code>
-    print('hello, world')
-                </code></pre>
-        </li>
-
-        <li class='lesson-bullet'>
-            Save your file, go back to the command line, navigate to the location of your file, and run the following:
+            Say we want to print out if x is less than y. The if statement below evaluates
+            the conditional. As the condition is True, an output gets printed!
 
             <pre>
                 <code>
-    python hello.py
-                </code></pre>
-        </li>
+    x = 8
+    y = 14
 
-        <li class='lesson-bullet'>
-            The output should be:
-
-            <pre>
-                <code>
-    hello, world
-                </code></pre>
-        </li>
-
-        <li class='lesson-bullet'>
-            Congrats! You have written your first Python program!
-        </li>
-
-        <li class='lesson-bullet'>
-            You can also use 
-            <a href='https://code.visualstudio.com/'>Visual Studio Code</a>,
-            a very popular IDE, to create Python programs.
-        </li>
-
-        <li class='lesson-bullet'>
-            Check out their Python tutorial
-            <a href='https://www.youtube.com/watch?v=D2cwvpJSBX4'>here!</a>
-        </li>
-            
-        
-    </ul>
-
-    <h2 class='lesson-text lesson-header'>
-        Functions (Overview)
-    </h2>
-
-    <ul class='lesson-text lesson-info'>
-            
-        <li class='lesson-bullet'>
-            What you just wrote was a print program. print() is a function that simply
-            displays output to the screen.
-        </li>
-
-        <li class='lesson-bullet'>
-            Python comes built-in with these functions; tools to perform certain tasks that we
-            can call whenever we need them.
-        </li>
-
-        <li class='lesson-bullet'>
-            To call a function, simply type its name and the inputs inside parentheses! Recall that
-            our print function took 'hello world' as an input and "printed" it to the screen!
-        </li>
-
-        <li class='lesson-bullet'>
-            We will encounter different types of functions later on (and hey, you'll even create your own!)
-            once we learn the basic fundamentals of Python.
-        </li>
-
-    </ul>
-
-    <h2 class='lesson-text lesson-header'>
-        Variables
-    </h2>
-
-    <ul class='lesson-text lesson-info'>
-            
-        <li class='lesson-bullet'>
-            Variables are simply containers for storing data values. Say you want to represent
-            the number five (5) in a variable:
-
-            <pre>
-                <code>
-    # Tip: You can write comments in your code using hashes!
-    x = 5
-    print(x)
-                </code></pre>
-        </li>
-
-        <li class='lesson-bullet'>
-            Your first instinct might be that the print() function prints out 'x'. However,
-            in your code, x is now a variable containing the number five (5)! Thus, the output
-            of your program is:
-
-            <pre>
-                <code>
-    # Output
-    5
-                </code></pre>
-        </li>
-
-        <li class='lesson-bullet'>
-            Variables are case sensitive. In the ccode below, the variables do not have the same
-            values even though they are essentially the same letter.
-
-            <pre>
-                <code>
-    x = 5
-    X = 404
-
-    print(x)
-    print(X)
+    if x < y:
+        print('x is less than y')
 
     # Output
-    5
-    404
+    'x is less than y'
                 </code></pre>
         </li>
 
         <li class='lesson-bullet'>
-            A variable can be changed in the middle of your program. Python reads code from top to bottom,
-            so be careful when changing the values of your variables!
+            Boolean values and variables can be used directly inside of an if statement.
+            As if statements use booleans to determine an action, the same logic applies!
 
             <pre>
                 <code>
-    x = 5
-
-    # Random code goes here
-
-    x = 'John'
-    print(x)
+    x = 8
+    y = 14
+    is_x_less_y = x < y
+    
+    if is_x_less_y:
+        print('x is less than y')
 
     # Output
-    John
-            </code></pre>
-        </li>
-
-        <li class='lesson-bullet'>
-            Wait, notice that? The variable x was assigned a text value instead of a number!
-            Variables can be assigned different data types. But what exactly are those?
+    'x is less than y'
+                </code></pre>
         </li>
         
+        <li class='lesson-bullet'>
+            But what if you want to do something if x is greater than y?
+        </li>
+
     </ul>
 
     <h2 class='lesson-text lesson-header'>
-        Data Types
+        If-Else Statements
     </h2>
 
     <ul class='lesson-text lesson-info'>
             
         <li class='lesson-bullet'>
-            Variables can store different data types, and each type can do different things.
-            The following are some of Python's built-in data types that you will see in this course:
-
-            <pre>
-                <code>
-    # Texts         # Numerics          # Boolean
-    str             int, float          bool
-
-    # Sequences     # Maps              # None 
-    list, range     dict                None
-
-                </code></pre>
+            If a condition fails, the code inside the if statement gets skipped.
+            If-else statements can be used to instruct a computer to do something
+            when a condition fails.
         </li>
 
-        <li>
-            You can get the data type of a variable by using the type() function.
+        <li class='lesson-bullet'>
+            Again, the syntax is much like English conditionals. If a condition is true,
+            do this, ELSE, do that instead.
 
             <pre>
                 <code>
-    x = 0
-    print(type(x))
+    x = 16
+    y = 14
+
+    if x < y:
+        print('x is less than y')
+    else:
+        print('x is greater than y')
 
     # Output
-    &lt;class 'int'>
+    'x is greater than y'
                 </code></pre>
         </li>
 
         <li class='lesson-bullet'>
-            The most fundamental of these data types are strings, ints, floats, booleans, and the 'None' value.
-            All programming languages have these data types by default, though some may have some weird implementations.
+            In the code above, as the if statement failed, the else statement
+            was instead executed. Since x was not less than y, the output
+            printed out 'x is greater than y' isntead!
         </li>
 
         <li class='lesson-bullet'>
-            We can do all sorts of stuff with these data types! But first, let us understand what each one stores.
+            Else statements act like a last resort for when every if statement inside
+            a so-called conditional chain.
         </li>
 
         <li class='lesson-bullet'>
-            Strings (str) are esentially a sequence of characters used to represent text. Think of any word. When that word is
-            assigned to a variable, the variable is now a string.
+            Conditional chains are blocks of code that test for every possible condition given
+            and executes the first block that returns True.
+        </li>
+
+        <li class='lesson-bullet'>
+            Else statements trigger if nothing in the chain was true. But conditional chains
+            are built from three components, if statements, else statements, and else if statements.
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Else-If Statements
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+
+        <li class='lesson-bullet'>
+            If statements can be used consecutively. However, in most situations, multiple if statements
+            are inefficient. They use up more lines of code, more keystrokes, more memory, and more time.
+        </li>
+
+        <li class='lesson-bullet'>
+            Take the code below for example. While, yes, the code is logically correct and gives the
+            correct output, there is a much more efficient way of writing it.
 
             <pre>
                 <code>
-    # Use single or double quotes to denote a string! Either work, just be consistent!
-    # This is important as Python, like most languages, recognize strings by the quotes.
-    x = 'David'
-    y = "cat"
+    x = 2
+    y = 2
 
-    print(type(x))
-    print(type(y))
+    if x > y:
+        print('x is greater than y')
+    
+    if x < y:
+        print('x is less than y')
+    
+    if x = y:
+        print('x is equal to y')
 
     # Output
-    &lt;class 'str'>
-    &lt;class 'str'>
+    'x is equal to 2'
                 </code></pre>
         </li>
 
         <li class='lesson-bullet'>
-            Numbers can be represented by integers (int) or floats (float). Integers are the whole numbers you
-            know and love while floats have decimal places, even if they are trailing zeros.
+            Else statements work inside conditional chains, but to solve the given problem above,
+            we had to write three sepate if statements, and therefore, three conditional chains.
+        </li>
+
+        <li class='lesson-bullet'>
+            Else if statements (elif) allow you to write multiple if statements in one conditional chain.
+            They are a combination of if and else statements.
+        </li>
+
+        <li class='lesson-bullet'>
+            Elif is Python's way of saying to check this condition instead if the above condition is false.
+            Python reads code from top to bottom, remember? The same applies for conditional chains.
+        </li>
+
+        <li class='lesson-bullet'>
+            Take the code below, for example. Same problem as before, but this time with less keystrokes and
+            a more elegant solution.
+
+            <pre>
+                <code>
+    x = 2
+    y = 2
+
+    if x > 2:
+        print('x is greater than 2')
+    elif x < 2:
+        print('x is less than 2')
+    else:
+        print('x is equal to 2')
+
+    # Output
+    'x is equal to 2'
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+        Combining if, else-if, and else statements can allow for comprehensive
+        decision-making structures.
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Logical Operators
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+
+        <li class='lesson-bullet'>
+            One if statement can have multiple conditions inside. To do this, one
+            can use logical operators
+            <a href='/lessons/1'>(see lesson 1)</a>.
+        </li>
+
+        <li class='lesson-bullet'>
+            In the code below, the if statement only triggers if both conditions
+            inside are True. As one wais false, the code block was skipped.
+
+            <pre>
+                <code>
+    x = 5
+    y = 2
+
+    if x < 4 AND y == 5:
+        print('output!')
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            To get a refresher on logical operators, <a href='/lessons/1'>see lesson 1</a>.
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Nested If
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+
+        <li class='lesson-bullet'>
+            In programming, nesting means to put one block of code inside another.
+        </li>
+
+        <li class='lesson-bullet'>
+            You have have if statements inside of other if statements.
+            This is called a nested if.
+        </li>
+
+        <li class='lesson-bullet'>
+            In the given example below, the program called two print functions, one
+            from the main if statement, and the other from the nested if.
+
+            <pre>
+                <code>
+    x = 20
+
+    if x > 0:
+        print('x is positive')
+        if x % 2 == 0:
+            print('x is even')
+        else:
+            print('x is odd')
+    
+    # Output
+    'x is positive'
+    'x is even'
+                </code></pre>
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Pass Statement
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+        
+        <li class='lesson-bullet'>
+            If statements cannot be empty. If for some reason, an if statement does not
+            have any content, the pass statement can be used to avoid getting an error.
+            It also exits out of the if statement, skipping code underneath.
+
+            <pre>
+                <code>
+    a = 10
+    b = 20
+
+    if a < b:
+        pass
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            Pass statements are usually used as a placeholder for when code is in development.
+            Pass statements can also be used inside other contexts, some we'll see later on.
+        </li>
+
+        <li class='lesson-bullet'>
+            Pass statements can also be used inside other contexts, some we'll see later on.
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Loops
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+        
+        <li class='lesson-bullet'>
+            Repeating lines of code is a common practice in programming.
+        </li>
+
+        <li class='lesson-bullet'>
+            However, simply copying and pasting code is not only a waste of many
+            resources but also simply does not work most of the time.
+        </li>
+
+        <li class='lesson-bullet'>
+            Loops are sequences of code that repeat until a certain condition is met.
+        </li>
+
+        <li class='lesson-bullet'>
+            Python has two loop commands, for loops and while loops.
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        For Loops
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+
+        <li class='lesson-bullet'>
+            A for loop is used to iterate over a sequence (lists, dictionaries, sets, tuples, strings) 
+        </li>
+
+        <li class='lesson-bullet'>
+            Don't worry! More in depth discussions on these data types will be found later on.
+        </li>
+
+        <li class='lesson-bullet'>
+            For loops will execute lines of code under it for each item inside of a sequence.
+        </li>
+
+        <li class='lesson-bullet'>
+            Say you have a string. A for loop will iterate over every character before stopping.
+
+            <pre>
+                <code>
+    string = bye
+
+    for x in string:    # variables in a for loop are used for indexing—getting the current item in a sequence
+        print('character')
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            The code above will print 'character' thrice as the variable (string) has three characters. Say a list
+            or dictionary also has three elements. If you use a for loop, it will also repeat thrice.
+        </li>
+
+        <li class='lesson-bullet'>
+            The range() function can be used to loop through code a set number of times. It returns a
+            sequence of numbers by default, starts at 0, and increments by 1 by default.
+
+            <pre>
+                <code>
+    for i in range(5):
+        print('bark')
+                </code> </pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            The code above prints bark 5 times, as specified by the number inside the range function.
+        </li>
+
+        <li class='lesson-bullet'>
+            It is also possible to change how the range function counts by passing multiple arguments.
+
+            <pre>
+                <code>
+    range(x)        # returns a sequence from 0 to x
+    range(x, y)     # returns a sequence from x to y
+    range(x, y, z)  # returns a sequence from x to y, incrementing by z
+                </code></pre>
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        While Loops
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+
+        <li class='lesson-bullet'>
+            A while loop executes code as long as a condition is true.
+        </li>
+
+        <li class='lesson-bullet'>
+            In this example, the code will print x as long as x is less than 5:
 
             <pre>
                 <code>
     x = 1
-    y = 1.0
-
-    print(type(x))
-    print(type(y))
-
-    # Output
-    &lt;class 'int'>
-    &lt;class 'float'>
+    while x < 5:
+        print(x)
+        x += 1
                 </code></pre>
         </li>
 
         <li class='lesson-bullet'>
-            The None data type represents, well, nothing! To be clear, it represents the abscence
-            of a value or a null state. It could also represent the emptiness of a list (more on that soon!).
-
-            <pre>
-                <code>
-    x = None
-    print(type(x))
-
-    # Output
-    &lt;class 'NoneType'>
-                </code></pre>
+            It is important to make sure that your while loop has a condition
+            that can become false, or else it will continue forever. The code above increments
+            x by 1 every loop, making sure it hits the conditional after a few loops.
         </li>
 
-        <li class='lesson-bullet'>
-            A boolean can hold only one of two possible values: True or False. It's as simple as it sounds!
-            When something is true, a boolean says it's true. If it isn't, then a boolean says it's false.
-
-            <pre>
-                <code>
-    # In Python, booleans are capitalized!
-    x = True
-
-    print(type(x))
-    print(5 < 3) # More on operators soon!
-
-    # Output
-    &lt;class 'bool'>
-    False
-                </code></pre>
-        </li>
-
-        <li class='lesson-bullet'>
-            If you've looked at your sidebar, you'll see lists and dictionaries, two more Python data types.
-            We'll get to those soon! Python has a bunch more, but it'll be up to you to explore those!
-        </li>
     </ul>
 
     <h2 class='lesson-text lesson-header'>
-        Operators
+        Nested Loops
     </h2>
 
     <ul class='lesson-text lesson-info'>
-            
+        
         <li class='lesson-bullet'>
-            Operators are used to perform operations on variables and values.
+            Like if statements and functions, loops can be nested on top of one another.
         </li>
 
         <li class='lesson-bullet'>
-            Arithmetic operators are used to perform common mathematical operations:
-            
+            This can be used for solutions to problems that programmers often encounter. The code
+            below prints the multiplication table from 1 to 3!
+
             <pre>
                 <code>
-    x = 15
-    y = 5
+    for i in range(3):
+        for j in range(3):
+            print(i * j)
+                </code></pre>
+        </li>
 
-    print(x + y)    # +, addition
-    print(x - y)    # -, subtraction
-    print(x * y)    # *, multiplication
-    print(x / y)    # /, division (returns a float)
-    print(x // y)   # //, floor division (returns an integer, rounded down)
-    print(x % y)    # %, module (returns a remainder)
+    </ul>
 
-    # Output
-    20
-    10
-    75
-    3.0
-    3
-    0
+    <h2 class='lesson-text lesson-header'>
+        Pass, Continue, Break
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+
+        <li class='lesson-bullet'>
+            As you already know, pass statements are used to implement code with
+            no function. This can be useful in loops and as placeholders as loops
+            cannot be empty.
+
+            <pre>
+                <code>
+    for i in range(10):
+        pass    # TODO
                 </code></pre>
         </li>
 
         <li class='lesson-bullet'>
-            The equal sign is Python's assignment operator. Whatever is on the left gets assigned the value
-            on the right! Python also comes with some handy syntax when using the assignment operator.
+            Continue statements stop the current interation of a loop and continues with
+            the next. In the example below, the code is skipped if x is not an even number.
 
             <pre>
                 <code>
-    x = 5   # x gets assigned the value 5
-    y = x   # y gets assigned the value of x, which is 5
-
-    x += 5  # x gets assigned the value of x + 5 (x = x + 5)
-
-    print(x)
-    print(y)
-
-    # Output
-    10
-    5
+    for x in range(10):
+        if x % 2 != 0:
+            continue
+        print(f('{x} is an even number')
                 </code></pre>
         </li>
 
         <li class='lesson-bullet'>
-            Comparison operators are used to compare two variables or values. Comparison statements return
-            booleans!
+            Break statements stop a loop altogether. This is specially useful for stopping
+            a loop when a certain test-case is already met.
 
             <pre>
                 <code>
-    print(5 == 5)   # Single equal signs are for assigning values, while double equal signs are for comparison!
-    print(10 > 3)   # Greater than
-    print(10 < 3)   # Less than
-    print(10 >= 10) # Greater than or equal to
-    print(10 <= 20) # Less than or equal to
+    x = 0
     
-    # Output
-    True
-    True
-    False
-    True
-    False
+    for i in range(100):
+        x += i
+        if x > 100:
+            break
                 </code></pre>
-        </li>
-
-        <li class='lesson-bullet'>
-            Logical operators combine conditional statements. Their use cases are identical to
-            their english counterparts!
-
-            <pre>
-                <code>
-    print(2 < 5 and 5 < 2)  # Returns True if both conditions are true
-    print(2 < 5 or 5 < 2)   # Returns True if one condition is true
-    print(5 < 2)            # Returns True if the condition is false
-
-    # Output
-    False
-    True
-    True
-                </code></pre>
-        </li>
-
-        <li class='lesson-bullet'>
-            Just like with data types, Python has a bunch of other operators. Some, we'll
-            encounter later on in the course. Others, well, you're going to find and learn them yourself!
         </li>
 
         <hr>
+        
     </ul>
     
     <div class='nav-buttons'>

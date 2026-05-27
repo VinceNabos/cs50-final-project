@@ -7,7 +7,7 @@ from sqlite3 import connect, Row
 from helpers import get_db, login_required
 from subprocess import run, TimeoutExpired
 from ast import parse, walk, Import, ImportFrom
-from random import randint, uniform
+from random import randint, uniform, choice
 
 # Configure app
 app = Flask(__name__)
@@ -55,11 +55,35 @@ def lesson1():
     if progress['lessons_completed'] == 0:
         db.execute('UPDATE users SET lessons_completed = lessons_completed + 1 WHERE id = ?', (session['user_id'],))
         db.execute(
-                'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (0, 1, CURRENT_TIMESTAMP, ?)',
+                'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (0, 2, CURRENT_TIMESTAMP, ?)',
                 (session['user_id'],))
         connection.commit()
 
     return render_template('lesson1.html', 
+                           lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+# Lesson 2
+@app.route('/lessons/2')
+@login_required
+def lesson2():
+
+    # Execute database
+    sql = get_db()
+    connection = sql[0]
+    db = sql[1]
+
+    # Load user progress
+    db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+    progress = db.fetchone()
+
+    if progress['lessons_completed'] == 1:
+        db.execute('UPDATE users SET lessons_completed = lessons_completed + 1 WHERE id = ?', (session['user_id'],))
+        db.execute(
+                'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (0, 1, CURRENT_TIMESTAMP, ?)',
+                (session['user_id'],))
+        connection.commit()
+
+    return render_template('lesson2.html', 
                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
 
 # Exercises
@@ -95,6 +119,10 @@ def exercise1():
 
     # Run code if method is POST
     if request.method == 'POST':
+
+        # Reset website if reset was pressed
+        if request.form.get('action') == 'reset':
+            return redirect('/exercises/1/change')
 
         # Get code
         code = request.form.get('code').rstrip()
@@ -170,6 +198,10 @@ def exercise1():
                     (session['user_id'],))
             connection.commit()
 
+            # Update progress variable
+            db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+            progress = db.fetchone()
+
         return render_template('exercise1.html', code=code, output=output, correct=True,
                             lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
     
@@ -177,6 +209,120 @@ def exercise1():
     else:
         return render_template('exercise1.html', 
                             lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+    
+# Set 1: Exercise 2
+@app.route('/exercises/1/profiling', methods=['GET', 'POST'])
+@login_required
+def exercise2():
+
+    # Execute database
+    sql = get_db()
+    connection = sql[0]
+    db = sql[1]
+
+    # Load user progress
+    db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+    progress = db.fetchone()
+
+    # Run code if method was POST
+    if request.method == 'POST':
+
+        # Reset website if reset was pressed
+        if request.form.get('action') == 'reset':
+            return redirect('/exercises/1/profiling')
+        
+        # Get code
+        code = request.form.get('code').rstrip()
+
+        # Check code for imports
+        try:
+            tree = parse(code)
+            for node in walk(tree):
+
+                if isinstance(node, (Import, ImportFrom)):
+                    return render_template('exercise2.html', code=code, output='For safety reasons, imports are not allowed!',
+                                        lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Returns error
+        except SyntaxError as output:
+            return render_template('exercise2.html', code=code, output=output, 
+                                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Variables for checking
+        outputs = []
+        answers = []
+
+        # Execute code
+        try:
+
+            # Testing code
+            code_test = code
+
+            # Test cases
+            for i in range(3):    
+                names = [
+                    'Harp', 'Robin', 'Kai', 'Luca', 'Hanabi',
+                    'Angel', 'Harper', 'Park', 'Mitsu', 'Jamie'
+                    ]
+                name = choice(names)
+                age = randint(1, 100)
+                sexes = ['M', 'F']
+                sex = choice(sexes)
+                test = '\nprofiling("{x}", {y}, "{z}")'
+                code_test += test.format(x = name, y = age, z = sex)
+                answers.append(f'{name} {age}{sex}')    
+
+            # Put code inside a file
+            with open('temp.py', 'w') as file:
+                file.write(code_test)
+
+            result = run(
+            ['python', 'temp.py'],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            input=''
+            )
+        
+        except TimeoutExpired:
+            return render_template('exercise2.html', code=code, output='Code execution timed out!', 
+                                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+        output = result.stderr
+        if output:
+            return render_template('exercise2.html', code=code, output=output, 
+                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        else:
+            output = result.stdout
+            outputs = result.stdout.splitlines()
+
+
+        # Checks answers
+        for i in range(3):
+            if outputs[i] != answers[i]:
+                return render_template('exercise1.html', code=code, output=output, 
+                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Update database if correct answer
+        if progress['exercises_completed'] == 1:
+            db.execute('UPDATE users SET exercises_completed = exercises_completed + 1 WHERE id = ?', (session['user_id'],))
+            db.execute(
+                    'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (1, 2, CURRENT_TIMESTAMP, ?)',
+                    (session['user_id'],))
+            connection.commit()
+            
+            # Update progress variable
+            db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+            progress = db.fetchone()
+
+        return render_template('exercise2.html', code=code, output=output, correct=True,
+                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+
+    else:
+        return render_template('exercise2.html', 
+                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
 
 # Account settings
 @app.route('/account')

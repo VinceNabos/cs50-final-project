@@ -1,15 +1,15 @@
-# To help you understand exercises better, comments at the top of your
-# code editor will give you information that might be of use!
+# Remember the output's syntax!
+# [NAME] [AGE][SEX]
+# Dave 18M
 
-# The program checks your code by running it through a function!
-# Remember, functions are tools that can take inputs to produce an output.
-# The change function accepts the two variables that you need to use in your code!
+# You can use the plus operator to 'concatenate' strings!
+# 'Dave ' + '18M' = Dave 18M
 
 # Do not edit the next line:
-def change(price, cash):
+def profiling(name, age, sex):
     
   # Write your code here! (Indentation is important!)
-  print(cash - price)
-change(8.81, 21.16)
-change(13.4, 27.36)
-change(12.81, 33.22)
+  print('hello world')
+profiling("Luca", 78, "F")
+profiling("Park", 76, "F")
+profiling("Luca", 93, "M")
