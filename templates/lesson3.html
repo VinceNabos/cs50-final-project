@@ -1,0 +1,803 @@
+{% extends 'layoutLoginRequired.html' %}
+
+{% block title %}
+    Lesson 3
+{% endblock %}
+
+{% block body %}
+
+    <h1 class='lesson-text lesson-title'>
+        Lesson 3: Lists, Dictionaries
+    </h1>
+
+    <h2 class='lesson-text lesson-header'>
+        Arrays
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+            
+        <li class='lesson-bullet'>
+            In programming, an array is a data structure used to store a collection
+            of items under a single variable.
+        </li>
+
+        <li class='lesson-bullet'>
+            Arrays are important in programming. Among their most useful cases is
+            making large sets of related data easier to handle.
+        </li>
+
+        <li class='lesson-bullet'>
+            Say you have interconnected values like the scores of students in a class.
+            Instead of having one variable for each student, a single array will suffice.
+
+            <pre>
+                <code>
+    # More on arrays in Python soon!
+    scores = {'Anthony': 76, 'Mark': 92, 'Zoey': 84} 
+                </code></pre>
+        </li>
+        
+        <li class='lesson-bullet code'>
+            Now, all of the student's scores are inside of one 'scores' variable
+            while still being clean and organized.
+        </li>
+
+        <li class='lesson-bullet'>
+            The scores variable, like other arrays would, can now be used for efficient
+            data access, looping and iteration, building complex structures, and many more!
+        </li>
+    
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Python Arrays (Collections)
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+            
+        <li class='lesson-bullet'>
+            Four data types for arrays, also commonly known as collections, come built-in
+            in Python.
+        </li>
+
+        <li class='lesson-bullet'>
+            A list is a collection which is ordered, changeable, and allows
+            duplicate members.
+
+            <pre>
+                <code>
+    list = ['A', 'B', 'C']
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            A tuple is a collection which is ordered, unchangeable, and allows
+            duplicate members.
+
+            <pre>
+                <code>
+    tuple = ('A', 'B', 'C')
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            A set is a collection which is unordered and does not allow duplicate
+            members. Set items are unchangeable but you can add or remove items inside.
+
+            <pre>
+                <code>
+    set = {'A', 'B', 'C'}
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            A dictionary is a collection which is ordered (as of Python 3.7), changeable,
+            and does not allow duplicate members.
+
+            <pre>
+                <code>
+    dictionary = {
+        'A': 1
+        'B': 2
+        'C': 3
+    }
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            In this lesson, we will take a look at lists, dictionaries, and certain functions and methods 
+            that you may want to use them with.
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Lists
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+            
+        <li class='lesson-bullet'>
+            Lists are one of the four built-in array data types in Python. They are
+            ordered, changeable, and allow duplicate values.
+        </li>
+
+        <li class='lesson-bullet'>
+            List items are also indexed. Indexing is essentially making information easier
+            and faster to find. A book index is a common index that you have most likely
+            encountered before.
+        </li>
+            
+        <li class='lesson-bullet'>
+            Lists are indexed by their position. The first element is at index [0], and the index
+            increases by one every time a new item is added to the list.
+        </li>
+
+        <li class='lesson-bullet'>
+            Lists are also ordered and can be changed. When a new item is added to a list,
+            it is placed at the end of the list. Only specific list methods can change that order.
+        </li>
+
+        <li class='lesson-bullet'>
+            And of course, lists are changeable. You can change an item in a list, add an item
+            to a list, or remove an item from a list after it has been created.
+        </li>
+
+        <li class='lesson-bullet'>
+            Lists are created with square brackets, and elements inside are separated by a comma.
+
+            <pre>
+                <code>
+    languages = ['Python', 'Javascript', 'C']
+                </code></pre>
+        </li>
+
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Accessing Lists
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+            
+        <li class='lesson-bullet'>
+            You can access an item inside of a list by referring
+            to its index number:
+
+            <pre>
+                <code>
+    languages = ['Python', 'Javascript', 'C']
+
+    x = languages[0]
+    print(x)
+
+    # Output
+    'Python'    # Remember, lists indexing starts with [0]
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            You can also index backwards, starting from [-1].
+
+            <pre>
+                <code>
+    languages = ['Python', 'Javascript', 'C']
+
+    x = languages[-1]
+    print(x)
+
+    # Output
+    'C'    # Negative indexing starts with [-1]
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            You can also select a range of elements using indexing. The return value
+            will be a new list with the specified items.
+
+            <pre>
+                <code>
+    languages = ['Python', 'JavaScript', 'C', 'C++', 'C#']
+    
+    x = languages[1:4]      # The range will start at index 2 and ends at index 4
+    print(x)                # The last element of the range is not included
+
+    # Leaving out a value (eg. [1:]) will select all elements from the start of the range until the end of the list
+
+    # Output
+    ['JavaScript', 'C', 'C++'] 
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            A conditional may also be used to check if an item is inside of a list.
+
+            <pre>
+                <code>
+    languages = ['Python', 'JavaScript', 'C']
+
+    if 'Python' in languages:
+        print('True')
+
+    # Output
+    'True'
+                </code></pre>
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Modifying Lists
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+
+        <li class='lesson-bullet'>
+            To change a specific list item, simply use the item's index. You can also
+            change a range of items. If you change more or less of what you indexed,
+            the items will shift accordingly.
+            
+            <pre>
+                <code>
+    ivies = ['Harvard', 'Yalw']
+
+    ivies[1] = 'Yale'   
+    
+    # ivies[1] ('Yalw') becomes ['Yale']
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            To add a new item inside of a list, we can use the append() method. Methods in Python
+            are essentially functions that belong to a specific class (this time, lists), and are
+            accessed with a dot (.).
+
+            <pre>
+                <code>
+    ivies = ['Harvard', 'Yale']
+
+    ivies.append('Columbia')    
+    
+    # ivies = ['Harvard', 'Yale', 'Columbia']
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            To add an item to a specific index without replacing any existing values, we can use
+            the insert() method. Insert takes in two arguments: insert(index, item)
+
+            <pre>
+                <code>
+    ivies = ['Harvard', 'Yale', 'Columbia']
+
+    ivies.insert(2, 'Princeton')    
+    
+    # ivies = ['Harvard', 'Yale', 'Princeton', 'Columbia']
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            To add another iterable to a list (usually another list), we can use the
+            extend() method.
+
+    ivies = ['Harvard', 'Yale', 'Princeton', 'Columbia']
+    schools = ['Brown', 'Cornell']
+
+    ivies.extend(schools)
+
+    # ivies = ['Harvard', 'Yale', 'Princeton' 'Columbia', 'Brown', 'Cornell']
+        </li>
+
+        <li class='lesson-bullet'>
+            To remove an item from a list, we can use the remove() method.
+            <pre>
+                <code>
+    ivies = ['Harvard', 'Yale', 'Princeton' 'Columbia', 'Brown', 'Cornell', 'Pann']
+    
+    ivies.remove('Pann')
+
+    # ivies = ['Harvard', 'Yale', 'Princeton' 'Columbia', 'Brown', 'Cornell']
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            To remove an item from a list using its index, we can use the pop() method.
+            Not specifying an index will remove the last item in a list.
+
+            <pre>
+                <code>
+    ivies = ['Harvard', 'Yale', 'Princeton' 'Columbia', 'Brown', 'Cornell', 'Pann']
+    
+    ivies.pop()
+
+    # ivies = ['Harvard', 'Yale', 'Princeton' 'Columbia', 'Brown', 'Cornell']
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+        To clear a list, we can use the clear() method.
+
+        <pre>
+            <code>
+    irrelevant_list = ['A', 'B', 'C']
+    
+    irrelevant_list.clear()
+
+    # irrelevant_list = []
+            </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            To sort a list, we can use the sort() method. sort() is case-sensitive by default,
+            and as such, will return capital letters before lowercase ones.
+            
+            <pre>
+                <code>
+    numbers = [5, 6, 2, 8]
+
+    numbers.sort()
+
+    # numbers = [2, 5, 6, 8]
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            You can reverse a sort (descending) by using the argument 'reverse = True'.
+
+            <pre>
+                <code>
+    numbers = [5, 6, 2, 8]
+
+    numbers.sort(reverse = True)
+
+    # numbers = [8, 6, 5, 2]
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            You can customize a sort by using the argument 'key = [function]'. One common
+            use case for this is using a case-insensitive sort with the str.lower function.
+        </li>
+
+        <li class='lesson-bullet'>
+            For more list methods, check out <a href='https://docs.python.org/3/tutorial/datastructures.html'>
+                Python's official documentation on lists.
+            </a>
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Dictionaries
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+            
+        <li class='lesson-bullet'>
+            Dictionaries are one of the four built-in array data types in Python. They are
+            ordered (as of Python 3.7), changeable, and allow duplicate values.
+        </li>
+
+        <li class='lesson-bullet'>
+            Dictionaries store 'key: value' pairs. One element of a dictionary has a key
+            and its corresponding table.
+        </li>
+
+        <li class='lesson-bullet'>
+            Think of a scoresheet, for example. Every element has a name (key) and a score (value).
+        </li>
+
+        <li class='lesson-bullet'>
+            Unlike lists, dictionaries are not indexed numerically.
+        </li>
+
+        <li class='lesson-bullet'>
+            Dictionaries are also ordered and can be changed. When a new item is added to a dictionary,
+            it is placed at the end of the dictionary. Only specific dictionary methods can change that order.
+        </li>
+
+        <li class='lesson-bullet'>
+            And of course, dictionaries are changeable. You can change an item in a dictionary, add an item
+            to a dictionary, or remove an item from a dictionary after it has been created.
+        </li>
+
+        <li class='lesson-bullet'>
+            Dictionaries are created with curly brackets, and elements inside are separated by a comma. An
+            element contains one key and one value, syntaxed like so:
+
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Uni': 'Harvard'
+    }
+                </code></pre>
+        </li>
+
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Accessing Dictionaries
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+            
+        <li class='lesson-bullet'>
+            You can access a value inside of a dictionary by
+            referring to its key name inside square brackets:
+
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Uni': 'Harvard'
+    }
+
+    x = profile['Name']
+
+    # x = 'John'
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            The get() method gives identical results. 
+
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', '
+        Age': 18, 
+        'Uni': 'Harvard'
+    }
+
+    x = profile.get('Name')
+
+    # x = 'John'
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            The keys() method will return a list of all the keys in a dictionary
+
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Uni': 'Harvard'
+    }
+
+    x = profile.keys()
+
+    # x = dict_keys(['Name', 'Age', 'Uni']) 
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            The values() method will return a list of all the values in a dictionary.
+
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Uni': 'Harvard'
+    }
+
+    x = profile.values())
+
+    # x = dict_values(['John', 18, 'Harvard']) 
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            The items() method will return a list of all the key, value pairs
+            in a dictionary as tuples.
+
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Uni': 'Harvard'
+    }
+
+    x = profile.items()
+
+    # x = dict_items([('Name', 'John'), ('Age', 18), ('Uni', 'Harvard')]) 
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            A conditional may also be used to check if a key is inside a dictionary.
+
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Uni': 'Harvard'
+    }
+
+    if 'Name' in profile:
+        print('True')
+
+    # Output
+    'True'
+                </code></pre>
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Modifying Dictionaries
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+
+        <li class='lesson-bullet'>
+            To change a specific value, simply use the item's key.
+            
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Uni': 'Harvard'
+    }
+
+    profile['Name'] = 'James'
+    print(profile['Name'])
+
+    # Output
+    'James'
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            The update() method will update a dictionary with the items in
+            the given argument. The argument must either be a dictionary or
+            iterable with key, value pairs.
+
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Uni': 'Harvard'
+    }
+
+    profile.update({'Name': 'James'})
+    print(profile['Name'])
+
+    # Output
+    'James'
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            To add an item to a dictionary, simply use a new index key
+            and assign a value to it.
+
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Uni': 'Harvard'
+    }
+
+    profile['Year'] = 'Freshman'
+
+    # profile = {
+    #     'Name': 'John', 
+    #     'Age': 18, 
+    #     'Uni': 'Harvard'
+    #     'Year': 'Freshman'
+    # }
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            When using the update() function with an argument that does
+            not exist in the dictionary, the item will instead be added.
+
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Uni': 'Harvard'
+    }
+
+    profile.update({'Year': 'Freshman'})
+
+    # profile = {
+    #     'Name': 'John', 
+    #     'Age': 18, 
+    #     'Uni': 'Harvard'
+    #     'Year': 'Freshman'
+    # }
+        </li>
+
+        <li class='lesson-bullet'>
+            To remove an item from a dictionary with its specific key,
+            we can use the pop() method.
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Uni': 'Harvard'
+        'Year': 'Freshman'
+    }
+
+    profile.pop('Uni')
+
+    # profile = {
+    #     'Name': 'John', 
+    #     'Age': 18, 
+    #     'Year': 'Freshman'
+    # }
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            To remove the last inserted item in a dictionary, we can use
+            the popitem() method. Note that at versions before 3.7, a random
+            item is removed instead.
+
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Uni': 'Harvard'
+        'Year': 'Freshman'
+    }
+
+    profile.popitem()
+
+    # profile = {
+    #     'Name': 'John', 
+    #     'Age': 18, 
+    #     'Uni': 'Harvard'
+    # }
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+        To clear a dictionary, we can use the clear() method.
+
+        <pre>
+            <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Uni': 'Harvard'
+        'Year': 'Freshman'
+    }
+
+    profile.clear()
+
+    # profile = {}
+            </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            For more dictionary methods, check out <a href='https://docs.python.org/3/tutorial/datastructures.html#dictionaries'>
+                Python's official documentation on dictionaries.
+            </a>
+        </li>
+
+    </ul>
+
+    <h2 class='lesson-text lesson-header'>
+        Looping Arrays
+    </h2>
+
+    <ul class='lesson-text lesson-info'>
+
+        <li class='lesson-bullet'>
+            Looping through arrays is very useful for trying to access every element inside it at once.
+        </li>
+
+        <li class='lesson-bullet'>
+            Most times, a for loop will suffice looping through an array.
+        </li>
+
+        <li class='lesson-bullet'>
+            When used on a list, a for loop will go over every item inside once:
+
+            <pre>
+                <code>
+    list = ['cow', 'dog', 'eagle']
+
+    for x in list:  # you can name the temporary variable anything you want!
+        print(x)
+
+    # Output
+    'cow'
+    'dog'
+    'eagle'
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            You can also loop through a list using its index by using the range() and
+            len() functions.
+
+            <pre>
+                <code>
+    list = ['cow', 'dog', 'eagle']
+
+    for i in range(len(list)):
+        print(list[i])
+
+    # Output
+    'cow'
+    'dog'
+    'eagle'
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            When used on a dictionary, a for loop will go over every pair inside once:
+
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Year': 'Freshman'
+    }
+
+    for x in profile: 
+        print(x)
+        print(profile[x])
+
+    # Output
+    'Name'
+    'John'
+    'Age'
+    18
+    'Year'
+    'Freshman'
+                </code></pre>
+        </li>
+
+        <li class='lesson-bullet'>
+            You can also use dictionary methods (keys(), values(), items()) to loop
+            through keys, values, or both at the same time.
+
+            <pre>
+                <code>
+    profile = {
+        'Name': 'John', 
+        'Age': 18, 
+        'Year': 'Freshman'
+    }
+
+    for x, y in profile.items: 
+        print(x, y)
+
+    # Output
+    'Name' 'John'
+    'Age' 18
+    'Year' 'Freshman'
+                </code></pre>
+        </li>
+
+        <hr>
+        
+    </ul>
+    
+    <div class='nav-buttons'>
+        <a href='/lessons/2'>
+            <button type="button" class="btn btn-outline-primary nav-butt">< Back</button>
+        </a>
+    </div>
+
+{% endblock %}

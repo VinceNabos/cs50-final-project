@@ -86,6 +86,32 @@ def lesson2():
     return render_template('lesson2.html', 
                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
 
+
+# Lesson 3
+@app.route('/lessons/3')
+@login_required
+def lesson3():
+
+    # Execute database
+    sql = get_db()
+    connection = sql[0]
+    db = sql[1]
+
+    # Load user progress
+    db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+    progress = db.fetchone()
+
+    if progress['lessons_completed'] == 2:
+        db.execute('UPDATE users SET lessons_completed = lessons_completed + 1 WHERE id = ?', (session['user_id'],))
+        db.execute(
+                'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (0, 2, CURRENT_TIMESTAMP, ?)',
+                (session['user_id'],))
+        connection.commit()
+
+    return render_template('lesson3.html', 
+                           lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+
 # Exercises
 @app.route('/exercises')
 @login_required
@@ -102,6 +128,7 @@ def exercises():
 
     return render_template('exercises.html', 
                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
 
 # Set 1: Exercise 1
 @app.route('/exercises/1/change', methods=['GET', 'POST'])
