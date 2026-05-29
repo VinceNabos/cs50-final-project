@@ -1,24 +1,24 @@
 {% extends 'layoutLoginRequired.html' %}
 
 {% block title %}
-    Change
+    Waldo
 {% endblock %}
 
 {% block body %}
 
     <div class='exercise-top'>
         <h1 class='exercise-text exercise-title'>
-            Exercise 1.1: Change
+            Exercise 3.1: Where's Waldo
         </h1>
 
         <h4 class='exercise-text exercise-title exercise-completion'
-        {% if exercises_completed >= 1 %}
+        {% if exercises_completed >= 5 %}
             style='color: green'
         {% else %}
             style='color: gray'
         {% endif %}
         >
-            {% if exercises_completed >= 1 %}
+            {% if exercises_completed >= 5 %}
                 Complete!
             {% else %}
                In progress!
@@ -39,17 +39,16 @@
         <ul class='exercise-text exercise-info'>
             
             <li class='exercise-bullet'>
-                We all know the process of buying something. You pick an item, it has a price,
-                you pay that price, and any extra amount will come back to you as change.
+                So apparently, Waldo's gone missing again!
             </li>
 
             <li class='exercise-bullet'>
-                Now, we live in a world where calculating change is as easy as one, two, three!
-                But even better, we can automate it.
+                Witnesses say they saw him hiding inside of Python arrays!
             </li>
 
             <li class='exercise-bullet'>
-                In this exercise, you will implement a program that calculates the change of a customer.
+                In this exercise, you will implement a program that looks at lists
+                and dictionaries, and ultimately tell the user: "Where's Waldo?"
             </li>
 
         </ul>
@@ -61,16 +60,23 @@
         <ul class='exercise-text exercise-info'>
 
             <li class='exercise-bullet'>
-                In Python, create a program that calculates the change of a customer.
+                In Python, create a program that searches for Waldo.
             </li>
 
             <li class='exercise-bullet'>
-                The program will take two inputs, the price and the cash.
+                The program will take one input, people, which is
+                a list of dictionaries.
             </li>
 
             <li class='exercise-bullet'>
-                Your program must print() the change of the customer!
+                Inside each dictionary is a name, a city, and a disguise.
             </li>
+
+            <li class='exercise-bullet'>
+                You must print find Waldo's information and print it out
+                as a list!
+            </li>
+
         </ul>
 
         <h2 class='exercise-text exercise-header'>
@@ -80,20 +86,17 @@
         <ul class='exercise-text exercise-info'>
 
             <li class='exercise-bullet'>
-                You may assume that all inputs will either be integers or floats.
+                You must print Waldo's name, city, and disguise
+                on the terminal line as a list.
             </li>
 
             <li class='exercise-bullet'>
-                You may assume that the cash variable will always be equal to or larger
-                than the price.
+                The outputs are case-sensitive.
             </li>
 
             <li class='exercise-bullet'>
-                Your printed output can be either integers or floats.
-            </li>
-
-            <li class='exercise-bullet'>
-                Your printed output should not be rounded off.
+                Your may assume that there will be no duplicate names,
+                and therefore, only one Waldo.
             </li>
 
         </ul>
@@ -101,22 +104,18 @@
         </div>
 
         <div class="col col-md-8 right-col-exercise border-top border-bottom border-end">
-            <form action='/exercises/1/change' method='POST'>
+            <form action='/exercises/3/waldo' method='POST'>
             <div>
                 <textarea class='code-editor' name='code'>{% if request.method == 'POST' %}
 {{ code }}
 {% else %}
-# To help you understand exercises better, comments at the top of your
-# code editor will give you information that might be of use!
-
-# The program checks your code by running it through a function!
-# Remember, functions are tools that can take inputs to produce an output.
-# The change function accepts the two variables that you need to use in your code!
+# example dictionary: {'name': 'Waldo', 'city': 'Burger Land', 'disguise'}
+# Remember, you can loop through lists and dictionaries 
 
 # Do not edit the next line:
-def change(price, cash):
+def waldo(people):
     
-  # Write your code here! (Indentation is important!)
+  # Write your code here:
 {% endif %}  </textarea>
             </div>
 
@@ -154,15 +153,15 @@ def change(price, cash):
     <hr style='color: white; padding-bottom: 2vh; margin-top: 4vh; margin-left: 2vw; margin-right: 2vw;'>
 
     <div class='nav-buttons'>
-        <a href='/'>
-            <button type="button" class="btn btn-outline-primary nav-butt">< Home</button>
+        <a href='/exercises/2/secretary'>
+            <button type="button" class="btn btn-outline-primary nav-butt">< Back</button>
         </a>
 
         <a
-            {% if lessons_completed >= 1 and exercises_completed >= 1 %}
-                href="/exercises/1/profiling"
+            {% if lessons_completed >= 3 and exercises_completed >= 5 %}
+                href="/exercises/3/register"
             {% endif %}
-            class="btn btn-outline-primary nav-butt {% if lessons_completed < 1 or exercises_completed < 1 %}disabled{% endif %}"
+            class="btn btn-outline-primary nav-butt {% if lessons_completed < 3 or exercises_completed < 5 %}disabled{% endif %}"
         >
             Next >
         </a>

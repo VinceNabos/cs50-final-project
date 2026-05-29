@@ -6,7 +6,7 @@ from flask_login import LoginManager, login_required
 from sqlite3 import connect, Row
 from helpers import get_db, login_required
 from subprocess import run, TimeoutExpired
-from ast import parse, walk, Import, ImportFrom
+from ast import parse, walk, Import, ImportFrom, literal_eval
 from random import randint, uniform, choice
 
 # Configure app
@@ -210,12 +210,26 @@ def exercise1():
             output = result.stdout
             outputs = result.stdout.splitlines()
 
+        # Return if output is empty or not enough
+        if not outputs:
+            return render_template('exercise1.html', code=code, output='No output detected',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        elif len(outputs) > 3:
+            return render_template('exercise1.html', code=code, output='Too much outputs detected',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        elif len(outputs) < 3:
+            return render_template('exercise1.html', code=code, output='Incomplete number of outputs',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
 
         # Checks answers
         for i in range(3):
-            if float(outputs[i]) != answers[i]:
-                return render_template('exercise1.html', code=code, output=output, 
-                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+            try:
+                if float(outputs[i]) != answers[i]:
+                    return render_template('exercise1.html', code=code, output=output, 
+                        lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+            except ValueError:
+                return render_template('exercise1.html', code=code, output='ValueError',
+                                        lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
         
         # Update database if correct answer
         if progress['exercises_completed'] == 0:
@@ -237,6 +251,7 @@ def exercise1():
         return render_template('exercise1.html', 
                             lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
     
+
 # Set 1: Exercise 2
 @app.route('/exercises/1/profiling', methods=['GET', 'POST'])
 @login_required
@@ -323,11 +338,21 @@ def exercise2():
             output = result.stdout
             outputs = result.stdout.splitlines()
 
+        # Return if output is empty or not enough
+        if not outputs:
+            return render_template('exercise2.html', code=code, output='No output detected',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        elif len(outputs) > 3:
+            return render_template('exercise2.html', code=code, output='Too much outputs detected',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        elif len(outputs) < 3:
+            return render_template('exercise2.html', code=code, output='Incomplete number of outputs',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
 
         # Checks answers
         for i in range(3):
             if outputs[i] != answers[i]:
-                return render_template('exercise1.html', code=code, output=output, 
+                return render_template('exercise2.html', code=code, output=output, 
                     lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
         
         # Update database if correct answer
@@ -348,6 +373,568 @@ def exercise2():
 
     else:
         return render_template('exercise2.html', 
+                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+
+# Set 2: Exercise 1
+@app.route('/exercises/2/fizzbuzz', methods=['GET', 'POST'])
+@login_required
+def exercise3():
+
+    # Execute database
+    sql = get_db()
+    connection = sql[0]
+    db = sql[1]
+
+    # Load user progress
+    db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+    progress = db.fetchone()
+
+    # Run code if method was POST
+    if request.method == 'POST':
+
+        # Reset website if reset was pressed
+        if request.form.get('action') == 'reset':
+            return redirect('/exercises/2/fizzbuzz')
+        
+        # Get code
+        code = request.form.get('code').rstrip()
+
+        # Check code for imports
+        try:
+            tree = parse(code)
+            for node in walk(tree):
+
+                if isinstance(node, (Import, ImportFrom)):
+                    return render_template('exercise3.html', code=code, output='For safety reasons, imports are not allowed!',
+                                        lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Returns error
+        except SyntaxError as output:
+            return render_template('exercise3.html', code=code, output=output, 
+                                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Variables for checking
+        outputs = []
+        answers = []
+
+        # Execute code
+        try:
+
+            # Testing code
+            code_test = code
+
+            # Test cases
+            code_test += '\nfizzbuzz(100)'
+            for n in range(1, 101):
+                if n % 3 == 0 and n % 5 == 0:
+                    answers.append('FizzBuzz')
+                elif n % 3 == 0:
+                    answers.append('Fizz')
+                elif n % 5 == 0:
+                    answers.append('Buzz')
+                else:
+                    answers.append(str(n))
+
+            # Put code inside a file
+            with open('temp.py', 'w') as file:
+                file.write(code_test)
+
+            result = run(
+            ['python', 'temp.py'],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            input=''
+            )
+        
+        except TimeoutExpired:
+            return render_template('exercise3.html', code=code, output='Code execution timed out!', 
+                                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+        output = result.stderr
+        if output:
+            return render_template('exercise3.html', code=code, output=output, 
+                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        else:
+            output = result.stdout
+            outputs = result.stdout.splitlines()
+
+        # Return if output is empty or not enough
+        if not outputs:
+            return render_template('exercise3.html', code=code, output='No output detected',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        elif len(outputs) > 3:
+            return render_template('exercise3.html', code=code, output='Too much outputs detected',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        elif len(outputs) < 3:
+            return render_template('exercise3.html', code=code, output='Incomplete number of outputs',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+        # Checks answers
+        for i in range(len(answers)):
+            if outputs[i] != answers[i]:
+                return render_template('exercise3.html', code=code, output=output, 
+                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Update database if correct answer
+        if progress['exercises_completed'] == 2:
+            db.execute('UPDATE users SET exercises_completed = exercises_completed + 1 WHERE id = ?', (session['user_id'],))
+            db.execute(
+                    'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (1, 3, CURRENT_TIMESTAMP, ?)',
+                    (session['user_id'],))
+            connection.commit()
+            
+            # Update progress variable
+            db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+            progress = db.fetchone()
+
+        return render_template('exercise3.html', code=code, output=output, correct=True,
+                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+    else:
+        return render_template('exercise3.html', 
+                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+
+# Set 2: Exercise 2
+@app.route('/exercises/2/secretary', methods=['GET', 'POST'])
+@login_required
+def exercise4():
+
+    # Execute database
+    sql = get_db()
+    connection = sql[0]
+    db = sql[1]
+
+    # Load user progress
+    db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+    progress = db.fetchone()
+
+    # Run code if method was POST
+    if request.method == 'POST':
+
+        # Reset website if reset was pressed
+        if request.form.get('action') == 'reset':
+            return redirect('/exercises/2/secretary')
+        
+        # Get code
+        code = request.form.get('code').rstrip()
+
+        # Check code for imports
+        try:
+            tree = parse(code)
+            for node in walk(tree):
+
+                if isinstance(node, (Import, ImportFrom)):
+                    return render_template('exercise4.html', code=code, output='For safety reasons, imports are not allowed!',
+                                        lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Returns error
+        except SyntaxError as output:
+            return render_template('exercise4.html', code=code, output=output, 
+                                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Variables for checking
+        outputs = []
+        answers = []
+
+        # Execute code
+        try:
+
+            # Testing code
+            code_test = code
+
+            # Test cases
+            for i in range(3):    
+                times = [
+                    'morning', 'lunch', 'afternoon', 'evening'
+                    ]
+                day = randint(1, 7)
+                time = choice(times)
+                test = '\nsecretary({x}, "{y}")'
+                code_test += test.format(x = day, y = time)
+
+                # Secretary answers
+                if day == 1 or day == 7:
+                    answers.append('weekend')
+                elif time == 'lunch':
+                    answers.append('break')
+                elif time == 'morning':
+                    answers.append('standup')
+                elif time == 'evening':
+                    answers.append('clock-out')
+                elif time == 'afternoon':
+                    if day in [2, 4, 6]:
+                        answers.append('client')
+                    else:
+                        answers.append('paperwork')
+
+            # Put code inside a file
+            with open('temp.py', 'w') as file:
+                file.write(code_test)
+
+            result = run(
+            ['python', 'temp.py'],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            input=''
+            )
+        
+        except TimeoutExpired:
+            return render_template('exercise4.html', code=code, output='Code execution timed out!', 
+                                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+        output = result.stderr
+        if output:
+            return render_template('exercise4.html', code=code, output=output, 
+                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        else:
+            output = result.stdout
+            outputs = result.stdout.splitlines()
+
+        # Return if output is empty or not enough
+        if not outputs:
+            return render_template('exercise4.html', code=code, output='No output detected',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        elif len(outputs) > 3:
+            return render_template('exercise4.html', code=code, output='Too much outputs detected',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        elif len(outputs) < 3:
+            return render_template('exercise4.html', code=code, output='Incomplete number of outputs',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+        # Checks answers
+        for i in range(3):
+            if outputs[i] != answers[i]:
+                return render_template('exercise4.html', code=code, output=output, 
+                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Update database if correct answer
+        if progress['exercises_completed'] == 3:
+            db.execute('UPDATE users SET exercises_completed = exercises_completed + 1 WHERE id = ?', (session['user_id'],))
+            db.execute(
+                    'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (1, 4, CURRENT_TIMESTAMP, ?)',
+                    (session['user_id'],))
+            connection.commit()
+            
+            # Update progress variable
+            db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+            progress = db.fetchone()
+
+        return render_template('exercise4.html', code=code, output=output, correct=True,
+                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+    else:
+        return render_template('exercise4.html', 
+                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+
+# Set 3: Exercise 1
+@app.route('/exercises/3/waldo', methods=['GET', 'POST'])
+@login_required
+def exercise5():
+
+    # Execute database
+    sql = get_db()
+    connection = sql[0]
+    db = sql[1]
+
+    # Load user progress
+    db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+    progress = db.fetchone()
+
+    # Run code if method was POST
+    if request.method == 'POST':
+
+        # Reset website if reset was pressed
+        if request.form.get('action') == 'reset':
+            return redirect('/exercises/3/waldo')
+        
+        # Get code
+        code = request.form.get('code').rstrip()
+
+        # Check code for imports
+        try:
+            tree = parse(code)
+            for node in walk(tree):
+
+                if isinstance(node, (Import, ImportFrom)):
+                    return render_template('exercise5.html', code=code, output='For safety reasons, imports are not allowed!',
+                                        lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Returns error
+        except SyntaxError as output:
+            return render_template('exercise5.html', code=code, output=output, 
+                                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Variables for checking
+        outputs = []
+        answers = []
+
+        # Execute code
+        try:
+
+            # Testing code
+            code_test = code
+
+            # Test cases
+            names = [
+                'Harp', 'Robin', 'Kai', 'Luca', 'Hanabi',
+                'Angel', 'Harper', 'Park', 'Mitsu', 'Waldo'
+            ]
+            cities = [
+                'Sausage Town', 'Pickle Town', 'Waffle Land', 'Noodle City',
+                'Burger Town', 'Donut Land', 'Muffin City', 'Potato City',
+                'Banana Town', 'Biscotti Land'
+            ]
+            disguises = [
+                'Cop', 'Lifeguard', 'Hotdog Vendor', 'Clown', 'Teacher',
+                'Professional Yodeler', 'Singer', 'Dancer', 'Student', 'Unemployed'
+            ]
+
+            # Three test cases
+            for i in range(3):    
+                
+                people = []
+
+                # Five dictionaries
+                for i in range(5):
+                    person = {}
+                    if i == 4 and not any(name['name'] == 'Waldo' for name in people):
+                        person['name'] = 'Waldo'
+                    else:
+                        person['name'] = choice(names)
+                    person['city'] = choice(cities)
+                    person['disguise'] = choice(disguises)
+                    people.append(person)
+                
+                test = '\nwaldo({x})'
+                code_test += test.format(x = people)
+
+
+                # Waldo answers
+                for i in range(len(people)):
+                    if people[i]['name'] == 'Waldo':
+                        answers.append([
+                            people[i]['name'],
+                            people[i]['city'],
+                            people[i]['disguise']
+                        ])
+                        break
+                
+
+            # Put code inside a file
+            with open('temp.py', 'w') as file:
+                file.write(code_test)
+
+            result = run(
+            ['python', 'temp.py'],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            input=''
+            )
+        
+        except TimeoutExpired:
+            return render_template('exercise5.html', code=code, output='Code execution timed out!', 
+                                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+        output = result.stderr
+        if output:
+            return render_template('exercise5.html', code=code, output=output, 
+                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        else:
+            output = result.stdout
+            outputs = [
+                literal_eval(line)
+                for line in result.stdout.splitlines()
+            ]
+
+        # Return if output is empty or not enough
+        if not outputs:
+            return render_template('exercise5.html', code=code, output='No output detected',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        elif len(outputs) > 3:
+            return render_template('exercise5.html', code=code, output='Too much outputs detected',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        elif len(outputs) < 3:
+            return render_template('exercise5.html', code=code, output='Incomplete number of outputs',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+        # Checks answers
+        for i in range(3):
+            if outputs[i] != answers[i]:
+                return render_template('exercise5.html', code=code, output=output, 
+                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Update database if correct answer
+        if progress['exercises_completed'] == 4:
+            db.execute('UPDATE users SET exercises_completed = exercises_completed + 1 WHERE id = ?', (session['user_id'],))
+            db.execute(
+                    'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (1, 5, CURRENT_TIMESTAMP, ?)',
+                    (session['user_id'],))
+            connection.commit()
+            
+            # Update progress variable
+            db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+            progress = db.fetchone()
+
+        return render_template('exercise5.html', code=code, output=output, correct=True,
+                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+    else:
+        return render_template('exercise5.html', 
+                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+
+# Set 3: Exercise 2
+@app.route('/exercises/3/register', methods=['GET', 'POST'])
+@login_required
+def exercise6():
+
+    # Execute database
+    sql = get_db()
+    connection = sql[0]
+    db = sql[1]
+
+    # Load user progress
+    db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+    progress = db.fetchone()
+
+    # Run code if method was POST
+    if request.method == 'POST':
+
+        # Reset website if reset was pressed
+        if request.form.get('action') == 'reset':
+            return redirect('/exercises/3/register')
+        
+        # Get code
+        code = request.form.get('code').rstrip()
+
+        # Check code for imports
+        try:
+            tree = parse(code)
+            for node in walk(tree):
+
+                if isinstance(node, (Import, ImportFrom)):
+                    return render_template('exercise6.html', code=code, output='For safety reasons, imports are not allowed!',
+                                        lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Returns error
+        except SyntaxError as output:
+            return render_template('exercise6.html', code=code, output=output, 
+                                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Variables for checking
+        outputs = []
+        answers = []
+
+        # Execute code
+        try:
+
+            # Testing code
+            code_test = code
+
+            # Test cases
+            usernames = [
+                'NovaRift',   'ByteLynx',   'FrostByte',  'LunarZip',   'NeonDrift',    # Has 10 duplicates
+                'RapidVibe', 'VaporNest',  'ZenithBug',  'BlazeRoot',  'CyberMoth',
+                'AquaPulse',  'BrickNova', 'CopperWing', 'DriftPixel', 'EmberKick',
+                'FluxRider',  'GhostLeaf',  'HyperSeed', 'IvoryDash',  'JoltCrate',
+                'KarmaBlink', 'LogicSpark', 'MegaTrail',  'NitroFang', 'OmegaClaw',
+                'PrismVolt',  'QuartzNeko', 'RogueFrame', 'StaticPine', 'TitanBloom',
+                'space name', 'space name', 'space name', 'space name', 'space name',   # Invalid, no spaces
+                'space name', 'space name', 'space name', 'space name', 'space name',   # Invalid, no spaces
+                'aaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaa',             # Invalid, not 1-15
+                'aaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaa', '', '', '', '', '',             # Invalid, not 1-15
+            ]
+            users = [
+                'NovaRift', 'PixelFox', 'AeroMint', 'ByteLynx', 'CrimsonIQ',
+                'EchoVale', 'FrostByte', 'GlintRush', 'HexaBloom', 'IronPulse',
+                'JadeCircuit', 'KiloNova', 'LunarZip', 'MysticOrb', 'NeonDrift',
+                'OrbitCraze', 'PlasmaJet', 'QuantumYak', 'RapidVibe', 'SolarNix',
+                'TurboLeaf', 'UltraPebble', 'VaporNest', 'WildComet', 'XenonTrail',
+                'YellowFlux', 'ZenithBug', 'AlphaTwig', 'BlazeRoot', 'CyberMoth',
+            ]
+
+            # Three test cases
+            for i in range(3):    
+                
+                username = choice(usernames)
+                
+                test = '\nregister("{x}", {y})'
+                code_test += test.format(x = username, y = users)
+
+                # Check if username exists
+                if username in users:
+                    answers.append('Invalid: Username already exists')
+                # Check if username has spaces
+                elif ' ' in username:
+                    answers.append('Invalid: Username cannot have spaces')
+                elif not username or len(username) < 1 or len(username) > 15:
+                    answers.append('Invalid: Username must be 1-15 characters long')
+                else: answers.append('Valid')
+                
+            # Put code inside a file
+            with open('temp.py', 'w') as file:
+                file.write(code_test)
+
+            result = run(
+            ['python', 'temp.py'],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            input=''
+            )
+        
+        except TimeoutExpired:
+            return render_template('exercise6.html', code=code, output='Code execution timed out!', 
+                                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+        output = result.stderr
+        if output:
+            return render_template('exercise6.html', code=code, output=output, 
+                lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        else:
+            output = result.stdout
+            outputs = result.stdout.splitlines()
+
+        # Return if output is empty or not enough
+        if not outputs:
+            return render_template('exercise6.html', code=code, output='No output detected',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        elif len(outputs) > 3:
+            return render_template('exercise6.html', code=code, output='Too much outputs detected',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        elif len(outputs) < 3:
+            return render_template('exercise6.html', code=code, output='Incomplete number of outputs',
+                                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+        # Checks answers
+        for i in range(3):
+            if outputs[i] != answers[i]:
+                return render_template('exercise6.html', code=code, output=output, 
+                    lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+        
+        # Update database if correct answer
+        if progress['exercises_completed'] == 5:
+            db.execute('UPDATE users SET exercises_completed = exercises_completed + 1 WHERE id = ?', (session['user_id'],))
+            db.execute(
+                    'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (1, 5, CURRENT_TIMESTAMP, ?)',
+                    (session['user_id'],))
+            connection.commit()
+            
+            # Update progress variable
+            db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+            progress = db.fetchone()
+
+        return render_template('exercise6.html', code=code, output=output, correct=True,
+                            lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
+
+    else:
+        return render_template('exercise6.html', 
                             lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
 
 

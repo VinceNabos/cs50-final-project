@@ -1,24 +1,24 @@
 {% extends 'layoutLoginRequired.html' %}
 
 {% block title %}
-    Change
+    Secretary
 {% endblock %}
 
 {% block body %}
 
     <div class='exercise-top'>
         <h1 class='exercise-text exercise-title'>
-            Exercise 1.1: Change
+            Exercise 2.2: Secretary
         </h1>
 
         <h4 class='exercise-text exercise-title exercise-completion'
-        {% if exercises_completed >= 1 %}
+        {% if exercises_completed >= 4 %}
             style='color: green'
         {% else %}
             style='color: gray'
         {% endif %}
         >
-            {% if exercises_completed >= 1 %}
+            {% if exercises_completed >= 4 %}
                 Complete!
             {% else %}
                In progress!
@@ -39,17 +39,17 @@
         <ul class='exercise-text exercise-info'>
             
             <li class='exercise-bullet'>
-                We all know the process of buying something. You pick an item, it has a price,
-                you pay that price, and any extra amount will come back to you as change.
+                A week ago, you got promoted! You are now the CEO's secretary.
             </li>
 
             <li class='exercise-bullet'>
-                Now, we live in a world where calculating change is as easy as one, two, three!
-                But even better, we can automate it.
+                It's only been a week since you've been the secretary, and it's been tiring.
+                One reason is the inefficient scheduling system of the company.
             </li>
 
             <li class='exercise-bullet'>
-                In this exercise, you will implement a program that calculates the change of a customer.
+                In this exercise, you will implement a program that automatically tells the boss
+                what his task is at a specific day and time.
             </li>
 
         </ul>
@@ -61,15 +61,52 @@
         <ul class='exercise-text exercise-info'>
 
             <li class='exercise-bullet'>
-                In Python, create a program that calculates the change of a customer.
+                In Python, create a schedule tracker program.
             </li>
 
             <li class='exercise-bullet'>
-                The program will take two inputs, the price and the cash.
+                The program will take two inputs: the day and the time.
             </li>
 
             <li class='exercise-bullet'>
-                Your program must print() the change of the customer!
+                The day argument is an integer corresponding to a day of the week, starting
+                from Sunday. Sundays are equivalent to a one (1), Mondays to a two (2), and so on
+                until Saturday.
+            </li>
+
+            <li class='exercise-bullet'>
+                The time argument can be any of the following strings:
+                ['morning', 'lunch', 'afternoon', 'evening'].
+            </li>
+
+            <li class='exercise-bullet'>
+                The following rules should be checked in order:
+            </li>
+
+            <li class='exercise-bullet'>
+                If the day is Sunday or Saturday, print 'weekend'
+            </li>
+
+            <li class='exercise-bullet'>
+                If time is lunch, print 'break'
+            </li>
+
+            <li class='exercise-bullet'>
+                If time is morning, print 'standup'
+            </li>
+
+            <li class='exercise-bullet'>
+                If time is evening, print 'clock-out'
+            </li>
+
+            <li class='exercise-bullet'>
+                If time is afternoon and it is Monday, Wednesday, or Friday,
+                print 'client'
+            </li>
+
+            <li class='exercise-bullet'>
+                If time is afternoon and it is Tuesday or Thursday,
+                print 'paperwork'
             </li>
         </ul>
 
@@ -80,20 +117,18 @@
         <ul class='exercise-text exercise-info'>
 
             <li class='exercise-bullet'>
-                You may assume that all inputs will either be integers or floats.
+                You must print the boss' schedule to the terminal exactly
+                as the syntax states above.
             </li>
 
             <li class='exercise-bullet'>
-                You may assume that the cash variable will always be equal to or larger
-                than the price.
+                You may assume that the dates argument will always be an integer
+                from 1-7.
             </li>
 
             <li class='exercise-bullet'>
-                Your printed output can be either integers or floats.
-            </li>
-
-            <li class='exercise-bullet'>
-                Your printed output should not be rounded off.
+                Your may assume that the time argument will always be the following:
+                ['morning', 'lunch', 'afternoon', 'evening'].
             </li>
 
         </ul>
@@ -101,22 +136,22 @@
         </div>
 
         <div class="col col-md-8 right-col-exercise border-top border-bottom border-end">
-            <form action='/exercises/1/change' method='POST'>
+            <form action='/exercises/2/secretary' method='POST'>
             <div>
                 <textarea class='code-editor' name='code'>{% if request.method == 'POST' %}
 {{ code }}
 {% else %}
-# To help you understand exercises better, comments at the top of your
-# code editor will give you information that might be of use!
-
-# The program checks your code by running it through a function!
-# Remember, functions are tools that can take inputs to produce an output.
-# The change function accepts the two variables that you need to use in your code!
+# If the day is Sunday or Saturday, print 'weekend'
+# If time is lunch, print 'break'
+# If time is morning, print 'standup'
+# If time is evening, print 'clock-out'
+# If time is afternoon and it is Monday, Wednesday, or Friday, print 'client'
+# If time is afternoon and it is Tuesday or Thursday, print 'paperwork'
 
 # Do not edit the next line:
-def change(price, cash):
+def secretary(day, time):
     
-  # Write your code here! (Indentation is important!)
+  # Write your code here:
 {% endif %}  </textarea>
             </div>
 
@@ -154,15 +189,15 @@ def change(price, cash):
     <hr style='color: white; padding-bottom: 2vh; margin-top: 4vh; margin-left: 2vw; margin-right: 2vw;'>
 
     <div class='nav-buttons'>
-        <a href='/'>
-            <button type="button" class="btn btn-outline-primary nav-butt">< Home</button>
+        <a href='/exercises/2/fizzbuzz'>
+            <button type="button" class="btn btn-outline-primary nav-butt">< Back</button>
         </a>
 
         <a
-            {% if lessons_completed >= 1 and exercises_completed >= 1 %}
-                href="/exercises/1/profiling"
+            {% if lessons_completed >= 3 and exercises_completed >= 4 %}
+                href="/exercises/3/waldo"
             {% endif %}
-            class="btn btn-outline-primary nav-butt {% if lessons_completed < 1 or exercises_completed < 1 %}disabled{% endif %}"
+            class="btn btn-outline-primary nav-butt {% if lessons_completed < 3 or exercises_completed < 4 %}disabled{% endif %}"
         >
             Next >
         </a>

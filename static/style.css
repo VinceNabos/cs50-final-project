@@ -311,6 +311,8 @@
 .output {
     padding-top: 0 !important;
     margin-top: 0 !important;
+    max-height: 20vh;
+    overflow-y: auto !important;
 }
 
 /* Code editor styles */

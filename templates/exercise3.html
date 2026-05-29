@@ -1,24 +1,24 @@
 {% extends 'layoutLoginRequired.html' %}
 
 {% block title %}
-    Change
+    FizzBuzz
 {% endblock %}
 
 {% block body %}
 
     <div class='exercise-top'>
         <h1 class='exercise-text exercise-title'>
-            Exercise 1.1: Change
+            Exercise 2.1: FizzBuzz
         </h1>
 
         <h4 class='exercise-text exercise-title exercise-completion'
-        {% if exercises_completed >= 1 %}
+        {% if exercises_completed >= 3 %}
             style='color: green'
         {% else %}
             style='color: gray'
         {% endif %}
         >
-            {% if exercises_completed >= 1 %}
+            {% if exercises_completed >= 3 %}
                 Complete!
             {% else %}
                In progress!
@@ -39,17 +39,17 @@
         <ul class='exercise-text exercise-info'>
             
             <li class='exercise-bullet'>
-                We all know the process of buying something. You pick an item, it has a price,
-                you pay that price, and any extra amount will come back to you as change.
+                FizzBuzz is a classic programming exercise aimed to teach operators,
+                conditionals, and loops!
             </li>
 
             <li class='exercise-bullet'>
-                Now, we live in a world where calculating change is as easy as one, two, three!
-                But even better, we can automate it.
+                When learning any language, you can try solving FizzBuzz again to test
+                if you got the fundamentals figured out!
             </li>
 
             <li class='exercise-bullet'>
-                In this exercise, you will implement a program that calculates the change of a customer.
+                In this exercise, you will write a FizzBuzz program in Python.
             </li>
 
         </ul>
@@ -61,16 +61,30 @@
         <ul class='exercise-text exercise-info'>
 
             <li class='exercise-bullet'>
-                In Python, create a program that calculates the change of a customer.
+                The FizzBuzz function only has one argument: n.
             </li>
 
             <li class='exercise-bullet'>
-                The program will take two inputs, the price and the cash.
+                Your task is to print a specific output for each number
+                from 1-100. 
             </li>
 
             <li class='exercise-bullet'>
-                Your program must print() the change of the customer!
+                If the number is divisible by 3 and 5, print 'FizzBuzz'.
             </li>
+
+            <li class='exercise-bullet'>
+                If the number is divisible by 3, print 'Fizz'.
+            </li>
+
+            <li class='exercise-bullet'>
+                If the number is divisible by 5, print 'Buzx'.
+            </li>
+
+            <li class='exercise-bullet'>
+                Otherwise, print the number.
+            </li>
+
         </ul>
 
         <h2 class='exercise-text exercise-header'>
@@ -80,20 +94,16 @@
         <ul class='exercise-text exercise-info'>
 
             <li class='exercise-bullet'>
-                You may assume that all inputs will either be integers or floats.
+                n will always be an integer valued 100.
             </li>
 
             <li class='exercise-bullet'>
-                You may assume that the cash variable will always be equal to or larger
-                than the price.
+                It is fine to not use the variable n for your solution.
+                However, your code must be inside the fizzbuzz() function
             </li>
 
             <li class='exercise-bullet'>
-                Your printed output can be either integers or floats.
-            </li>
-
-            <li class='exercise-bullet'>
-                Your printed output should not be rounded off.
+                If your printed output is a string, it must follow the correct capitalization.
             </li>
 
         </ul>
@@ -101,22 +111,20 @@
         </div>
 
         <div class="col col-md-8 right-col-exercise border-top border-bottom border-end">
-            <form action='/exercises/1/change' method='POST'>
+            <form action='/exercises/2/fizzbuzz' method='POST'>
             <div>
                 <textarea class='code-editor' name='code'>{% if request.method == 'POST' %}
 {{ code }}
 {% else %}
-# To help you understand exercises better, comments at the top of your
-# code editor will give you information that might be of use!
-
-# The program checks your code by running it through a function!
-# Remember, functions are tools that can take inputs to produce an output.
-# The change function accepts the two variables that you need to use in your code!
+# 3 or 5: 'FizzBuzz'
+# 3: 'Fizz'
+# 5: 'Buzz'
+# Neither: n
 
 # Do not edit the next line:
-def change(price, cash):
+def fizzbuzz(n):
     
-  # Write your code here! (Indentation is important!)
+  # Write your code here:
 {% endif %}  </textarea>
             </div>
 
@@ -154,15 +162,15 @@ def change(price, cash):
     <hr style='color: white; padding-bottom: 2vh; margin-top: 4vh; margin-left: 2vw; margin-right: 2vw;'>
 
     <div class='nav-buttons'>
-        <a href='/'>
-            <button type="button" class="btn btn-outline-primary nav-butt">< Home</button>
+        <a href='/exercises/1/profiling'>
+            <button type="button" class="btn btn-outline-primary nav-butt">< Back</button>
         </a>
 
         <a
-            {% if lessons_completed >= 1 and exercises_completed >= 1 %}
-                href="/exercises/1/profiling"
+            {% if lessons_completed >= 3 and exercises_completed >= 3 %}
+                href="/exercises/2/secretary"
             {% endif %}
-            class="btn btn-outline-primary nav-butt {% if lessons_completed < 1 or exercises_completed < 1 %}disabled{% endif %}"
+            class="btn btn-outline-primary nav-butt {% if lessons_completed < 3 or exercises_completed < 3 %}disabled{% endif %}"
         >
             Next >
         </a>

@@ -1,24 +1,24 @@
 {% extends 'layoutLoginRequired.html' %}
 
 {% block title %}
-    Change
+    Register
 {% endblock %}
 
 {% block body %}
 
     <div class='exercise-top'>
         <h1 class='exercise-text exercise-title'>
-            Exercise 1.1: Change
+            Exercise 3.2: Register
         </h1>
 
         <h4 class='exercise-text exercise-title exercise-completion'
-        {% if exercises_completed >= 1 %}
+        {% if exercises_completed >= 6 %}
             style='color: green'
         {% else %}
             style='color: gray'
         {% endif %}
         >
-            {% if exercises_completed >= 1 %}
+            {% if exercises_completed >= 6 %}
                 Complete!
             {% else %}
                In progress!
@@ -39,17 +39,18 @@
         <ul class='exercise-text exercise-info'>
             
             <li class='exercise-bullet'>
-                We all know the process of buying something. You pick an item, it has a price,
-                you pay that price, and any extra amount will come back to you as change.
+                You and I have registered and logged into websites before.
+                Heck, you're using your own account in Syntax right now!
             </li>
 
             <li class='exercise-bullet'>
-                Now, we live in a world where calculating change is as easy as one, two, three!
-                But even better, we can automate it.
+                Lots of software with account features disallow duplicate
+                usernames, along with other limitations.
             </li>
 
             <li class='exercise-bullet'>
-                In this exercise, you will implement a program that calculates the change of a customer.
+                In this exercise, you will implement a program that takes a
+                username as input and looks at its validity.
             </li>
 
         </ul>
@@ -61,16 +62,38 @@
         <ul class='exercise-text exercise-info'>
 
             <li class='exercise-bullet'>
-                In Python, create a program that calculates the change of a customer.
+                In Python, create a program that checks if a username is valid.
             </li>
 
             <li class='exercise-bullet'>
-                The program will take two inputs, the price and the cash.
+                The program will take two inputs: username (string) and
+                users (list).
             </li>
 
             <li class='exercise-bullet'>
-                Your program must print() the change of the customer!
+                The following rules should be checked in order:
             </li>
+
+            <li class='exercise-bullet'>
+                Usernames are case sensitive. If a username is non-unique, print
+                'Invalid: Username already exists'
+            </li>            
+
+            <li class='exercise-bullet'>
+                A username cannot have spaces. If a username has spaces, print
+                'Invalid: Username cannot have spaces'
+            </li>
+
+            <li class='exercise-bullet'>
+                A username must be a minimum of one (1) character and a maximum
+                of fifteen (15) characters long. If a username does not fit this
+                criteria, print 'Invalid: Username must be 1-15 characters long'
+            </li>
+
+            <li class='exercise-bullet'>
+                If a username is valid, print 'Valid'
+            </li>
+
         </ul>
 
         <h2 class='exercise-text exercise-header'>
@@ -80,20 +103,16 @@
         <ul class='exercise-text exercise-info'>
 
             <li class='exercise-bullet'>
-                You may assume that all inputs will either be integers or floats.
+                You must print the validity of a username
+                to the terminal line.
             </li>
 
             <li class='exercise-bullet'>
-                You may assume that the cash variable will always be equal to or larger
-                than the price.
+                Your printed output must follow the given syntax.
             </li>
 
             <li class='exercise-bullet'>
-                Your printed output can be either integers or floats.
-            </li>
-
-            <li class='exercise-bullet'>
-                Your printed output should not be rounded off.
+                You may not assume that a username is not empty.
             </li>
 
         </ul>
@@ -101,22 +120,20 @@
         </div>
 
         <div class="col col-md-8 right-col-exercise border-top border-bottom border-end">
-            <form action='/exercises/1/change' method='POST'>
+            <form action='/exercises/3/register' method='POST'>
             <div>
                 <textarea class='code-editor' name='code'>{% if request.method == 'POST' %}
 {{ code }}
 {% else %}
-# To help you understand exercises better, comments at the top of your
-# code editor will give you information that might be of use!
-
-# The program checks your code by running it through a function!
-# Remember, functions are tools that can take inputs to produce an output.
-# The change function accepts the two variables that you need to use in your code!
+# non-unique: 'Invalid: Username already exists'
+# has spaces: 'Invalid: Username cannot have spaces'
+# outside of length: 'Invalid: Username must be 1-15 characters long'
+# valid: 'Valid'
 
 # Do not edit the next line:
-def change(price, cash):
+def register(username, users):
     
-  # Write your code here! (Indentation is important!)
+  # Write your code here:
 {% endif %}  </textarea>
             </div>
 
@@ -154,17 +171,8 @@ def change(price, cash):
     <hr style='color: white; padding-bottom: 2vh; margin-top: 4vh; margin-left: 2vw; margin-right: 2vw;'>
 
     <div class='nav-buttons'>
-        <a href='/'>
-            <button type="button" class="btn btn-outline-primary nav-butt">< Home</button>
-        </a>
-
-        <a
-            {% if lessons_completed >= 1 and exercises_completed >= 1 %}
-                href="/exercises/1/profiling"
-            {% endif %}
-            class="btn btn-outline-primary nav-butt {% if lessons_completed < 1 or exercises_completed < 1 %}disabled{% endif %}"
-        >
-            Next >
+        <a href='/exercises/3/waldo'>
+            <button type="button" class="btn btn-outline-primary nav-butt">< Back</button>
         </a>
 
     </div>
