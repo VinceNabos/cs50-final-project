@@ -3,3 +3,159 @@
 {% block title %}
     Dashboard
 {% endblock %}
+
+{% block body %}
+    <h1 class='dashboard-text dashboard-welcome'>
+        Welcome, {{ username }}
+    </h1>
+
+    <!-- Cards from https://getbootstrap.com/docs/5.3/components/card/ -->
+    <div class="resume-cards row row-cols-1 row-cols-md-2 g-4 mx-auto">
+
+        <div class="col">
+            <div class="card text-bg-dark border-light mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% if progress['lessons_completed'] == 0 or progress['lessons_completed'] == 1 %}
+                            Start learning:
+                        {% else %}
+                            Continue learning:
+                        {% endif %}
+                    </h5>
+
+                    <hr style='opacity: 0'>
+
+                    <p class='card-text' style='text-align: center;'>
+                        {% if progress['lessons_completed'] == 0 or progress['lessons_completed'] == 1 %}
+                            Lesson 1: Variables, Data Types, Operators
+                        {% elif progress['lessons_completed'] == 2 %}
+                            Lesson 2: Conditionals, Loops
+                        {% elif progress['lessons_completed'] == 3 %}
+                            Lesson 3: Lists, Dictionaries
+                        {% endif %}
+                    </p>
+
+                    <a class="card-text btn btn-outline-primary nav-butt" style='display: flex; justify-content: center;'
+                        {% if progress['lessons_completed'] == 0 or progress['lessons_completed'] == 1 %}
+                            href='/lessons/1'
+                        {% elif progress['lessons_completed'] == 2 %}
+                            href='/lessons/2'
+                        {% elif progress['lessons_completed'] == 3 %}
+                            href='/lessons/3'
+                        {% endif %}
+                    >
+                        Continue
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card text-bg-dark border-light mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% if progress['lessons_completed'] == 0 %}
+                            Complete a lesson to unlock exercises!
+                        {% elif progress['exercises_completed'] == 0 %}
+                            Start practicing:
+                        {% else %}
+                            Continue practicing:
+                        {% endif %}
+                    </h5>
+
+                    <hr style='opacity: 0'>
+
+                    <p class='card-text' style='text-align: center;'>
+                        {% if progress['lessons_completed'] == 0 %}
+                            Exercises Locked
+                        {% elif progress['exercises_completed'] == 0 or progress['exercises_completed'] == 1 %}
+                            Set 1: Change
+                        {% elif progress['lessons_completed'] == 1 and progress['exercises_completed'] == 2 %}
+                            Set 1: Profiling
+                        {% elif progress['lessons_completed'] == 2 and progress['exercises_completed'] == 3 %}
+                            Set 2: FizzBuzz
+                        {% elif progress['lessons_completed'] == 2 and progress['exercises_completed'] == 4 %}
+                            Set 2: Secretary
+                        {% elif progress['lessons_completed'] == 3 and progress['exercises_completed'] == 5 %}
+                            Set 3: Where's Waldo
+                        {% elif progress['lessons_completed'] == 3 and progress['exercises_completed'] == 6 %}
+                            Set 3: Register
+                        {% endif %}
+                    </p>
+
+                    <a class="card-text btn btn-outline-primary nav-butt" style='display: flex; justify-content: center;'
+                        {% if progress['exercises_completed'] == 0 or progress['exercises_completed'] == 1 %}
+                            href='/exercises/1/change'
+                        {% elif progress['lessons_completed'] == 1 and progress['exercises_completed'] == 2 %}
+                            href='/exercises/1/profiling'
+                        {% elif progress['lessons_completed'] == 2 and progress['exercises_completed'] == 3 %}
+                            href='/exercises/2/fizzbuzz'
+                        {% elif progress['lessons_completed'] == 2 and progress['exercises_completed'] == 4 %}
+                            href='/exercises/2/secretary'
+                        {% elif progress['lessons_completed'] == 3 and progress['exercises_completed'] == 5 %}
+                            href='/exercises/3/waldo'
+                        {% elif progress['lessons_completed'] == 3 and progress['exercises_completed'] == 6 %}
+                            href='/exercises/3/register'
+                        {% endif %}
+                    >
+                        {% if progress['lessons_completed'] == 0 %}
+                            Exercises Locked
+                        {% else %}
+                            Continue
+                        {% endif %}
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+
+    <!-- Progress bar from https://getbootstrap.com/docs/5.3/components/progress/ -->
+    <div class="mx-auto progress-container" style="width: 80%;">
+        <p class='dashboard-text'>
+            Progress:
+        </p>
+        <div class="progress-stacked">
+
+            <!-- Lessons -->
+            <div
+                class="progress"
+                role="progressbar"
+                aria-label="Lessons"
+                aria-valuemin="0"
+                aria-valuemax="3"
+                aria-valuenow="{{ progress['lessons_completed'] }}"
+                style="width: 33.33%; height: 20px !important;"
+            >
+                <div
+                    class="progress-bar"
+                    style="width: {{ progress['lessons_completed'] / 3 * 100 }}%;"
+                >
+                    Lessons: {{ progress['lessons_completed'] }}/3
+                </div>
+            </div>
+
+            <!-- Exercises -->
+            <div
+                class="progress"
+                role="progressbar"
+                aria-label="Exercises"
+                aria-valuemin="0"
+                aria-valuemax="6"
+                aria-valuenow="{{ progress['exercises_completed'] }}"
+                style="width: 66.67%; height: 20px !important;"
+            >
+                <div
+                    class="progress-bar bg-success"
+                    style="width: {{ progress['exercises_completed'] / 6 * 100 }}%;"
+                >
+                    Exercises: {{ progress['exercises_completed'] }}/6
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

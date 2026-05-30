@@ -17,7 +17,16 @@ app.secret_key = b'7ed559e13e3e66b64cc32d87488776c91fdc6b65d9f9d8d1ff29aa97621ee
 @app.route('/')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+
+    # Execute database
+    sql = get_db()
+    db = sql[1]
+
+    # Load user progress
+    db.execute('SELECT lessons_completed, exercises_completed FROM users WHERE id = ?', (session['user_id'],))
+    progress = db.fetchone()
+
+    return render_template('dashboard.html', username=session['username'], progress=progress)
 
 
 # Lessons
@@ -55,7 +64,7 @@ def lesson1():
     if progress['lessons_completed'] == 0:
         db.execute('UPDATE users SET lessons_completed = lessons_completed + 1 WHERE id = ?', (session['user_id'],))
         db.execute(
-                'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (0, 2, CURRENT_TIMESTAMP, ?)',
+                'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (0, 1, CURRENT_TIMESTAMP, ?)',
                 (session['user_id'],))
         connection.commit()
 
@@ -79,7 +88,7 @@ def lesson2():
     if progress['lessons_completed'] == 1:
         db.execute('UPDATE users SET lessons_completed = lessons_completed + 1 WHERE id = ?', (session['user_id'],))
         db.execute(
-                'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (0, 1, CURRENT_TIMESTAMP, ?)',
+                'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (0, 2, CURRENT_TIMESTAMP, ?)',
                 (session['user_id'],))
         connection.commit()
 
@@ -104,7 +113,7 @@ def lesson3():
     if progress['lessons_completed'] == 2:
         db.execute('UPDATE users SET lessons_completed = lessons_completed + 1 WHERE id = ?', (session['user_id'],))
         db.execute(
-                'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (0, 2, CURRENT_TIMESTAMP, ?)',
+                'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (0, 3, CURRENT_TIMESTAMP, ?)',
                 (session['user_id'],))
         connection.commit()
 
@@ -464,10 +473,10 @@ def exercise3():
         if not outputs:
             return render_template('exercise3.html', code=code, output='No output detected',
                                     lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
-        elif len(outputs) > 3:
+        elif len(outputs) > 100:
             return render_template('exercise3.html', code=code, output='Too much outputs detected',
                                     lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
-        elif len(outputs) < 3:
+        elif len(outputs) < 100:
             return render_template('exercise3.html', code=code, output='Incomplete number of outputs',
                                     lessons_completed=progress['lessons_completed'], exercises_completed=progress['exercises_completed'])
 
@@ -922,7 +931,7 @@ def exercise6():
         if progress['exercises_completed'] == 5:
             db.execute('UPDATE users SET exercises_completed = exercises_completed + 1 WHERE id = ?', (session['user_id'],))
             db.execute(
-                    'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (1, 5, CURRENT_TIMESTAMP, ?)',
+                    'INSERT INTO history (act_type, act_number, timestamp, user_id) VALUES (1, 6, CURRENT_TIMESTAMP, ?)',
                     (session['user_id'],))
             connection.commit()
             
@@ -942,7 +951,14 @@ def exercise6():
 @app.route('/account')
 @login_required
 def account():
-    return render_template('account.html', username=session['username'])
+
+    sql = get_db()
+    db = sql[1]
+
+    db.execute('SELECT * FROM history WHERE user_id = ?', (session['user_id'],))
+    progress = db.fetchall()
+
+    return render_template('account.html', username=session['username'], history=progress)
 
 
 # Change username

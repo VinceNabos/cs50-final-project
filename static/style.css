@@ -121,7 +121,7 @@
     width: 100%;
 }
 
-.row {
+.row-account {
     min-height: 100vh;
 }
 
@@ -139,13 +139,26 @@
     padding-top: 25vh;
 }
 
+.account-text {
+    color: white;
+}
+
 .account-username {
     text-align: center;
-    color: white;
     padding-top: 15px;
     padding-bottom: 2px;
 }
 
+.history-label {
+    margin-top: 12vh;
+    text-align: center;
+    margin-bottom: 4vh;
+}
+
+.history-table {
+    max-height: 80vh;
+    overflow-y: auto;
+}
 .change-label-container {
     text-align: center;
 }
@@ -327,4 +340,28 @@
 
 .cm-content {
     padding: 10px;
+}
+
+/* Dashboard styles */
+.dashboard-text {
+    color: white;
+    justify-content: space-between;
+}
+
+.dashboard-welcome {
+    margin-top: 20vh;
+    text-align: center;
+}
+
+.resume-cards {
+    margin-top: 2vh !important;
+    max-width: 80vw;
+}
+
+.progress-stacked {
+    height: 20px !important;
+}
+
+.progress-container {
+    margin-top: 5vh;
 }

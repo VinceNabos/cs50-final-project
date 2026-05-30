@@ -8,7 +8,7 @@
 
     <!-- Account page coluns-->
     <div class="container-fluid">
-    <div class="row">
+    <div class="row row-account">
     
         <!-- Profile -->
         <div class="col col-md-4 left-col-account border-end">
@@ -19,7 +19,7 @@
             </div>
 
             <!-- Username -->
-            <h4 class='account-username'>
+            <h4 class='account-username account-text'>
                 {{ username }}
             </h4>
 
@@ -36,8 +36,69 @@
 
         </div>
 
+        <!-- User history -->
         <div class="col col-md-8 right-col-account">
+
+            <h2 class='account-text history-label'>
+                Account History
+            </h2>
             
+            <table class="table table-striped table-dark history-table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Completed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(history|length) %}
+                    <tr>
+                        <th scope='row'>{{ i + 1 }}</th>
+
+                        <td>
+                            {% if history[i]['act_type'] == 0 %}
+                                'Lesson'
+                            {% else %}
+                                'Exercise'
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if history[i]['act_type'] == 0 %}
+                                {% if history[i]['act_number'] == 1 %}
+                                    'Variables, Data Types, Operators'
+                                {% elif history[i]['act_number'] == 2 %}
+                                    'Conditionals, Loops'
+                                {% elif history[i]['act_number'] == 3 %}
+                                    'Lists, Dictionaries'
+                                {% endif %}
+                            {% else %}
+                                {% if history[i]['act_number'] == 1 %}
+                                    'Change'
+                                {% elif history[i]['act_number'] == 2 %}
+                                    'Profiling'
+                                {% elif history[i]['act_number'] == 3 %}
+                                    'FizzBuzz'
+                                {% elif history[i]['act_number'] == 4 %}
+                                    'Secretary'
+                                {% elif history[i]['act_number'] == 5 %}
+                                    'Where's Waldo'
+                                {% elif history[i]['act_number'] == 6 %}
+                                    'Register'
+                                {% endif %}
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {{ history[i]['timestamp'] }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+
         </div>
     </div>
     </div>
