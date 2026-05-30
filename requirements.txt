@@ -1,6 +1,4 @@
 Flask
-flask_session
-werkzeug
-flask_login
-sqlite3
-subprocess
+Flask-Session
+Flask-Login
+Werkzeug
